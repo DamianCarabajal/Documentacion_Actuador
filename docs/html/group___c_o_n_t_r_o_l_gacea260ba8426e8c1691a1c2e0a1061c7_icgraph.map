@@ -1,0 +1,10 @@
+<map id="setServoDegrees" name="setServoDegrees">
+<area shape="rect" id="Node000001" title="Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido." alt="" coords="389,31,512,57"/>
+<area shape="rect" id="Node000002" href="$group___c_o_n_t_r_o_l.html#gaa9efa0560459f02fc6aba6ef5902edf6" title="Aplica un paso del controlador PI discreto y actualiza el servo." alt="" coords="247,5,341,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="371,32,342,29,342,24,377,32"/>
+<area shape="rect" id="Node000004" href="$group___r_t_o_s___t_a_s_k_s.html#ga4fc01d736fe50cf5b977f755b675f11d" title="Función de inicialización del firmware." alt="" coords="5,31,59,57"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="373,47,59,47,59,41,374,41"/>
+<area shape="rect" id="Node000003" href="$group___r_t_o_s___t_a_s_k_s.html#gab5ce0b7cdd97cf9ef50fbe8d77d1096b" title="Tarea de control discreto (PI + servo + logging)." alt="" coords="107,5,199,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="229,19,199,21,199,16,234,18"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="89,32,60,41,59,36,94,31"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="applyControl" name="applyControl">
+<area shape="rect" id="Node000001" title="Aplica un paso del controlador PI discreto y actualiza el servo." alt="" coords="5,31,100,57"/>
+<area shape="rect" id="Node000002" href="$group___c_o_n_t_r_o_l.html#ga925c721eb55d9682fef06252d112dcd2" title="Escala el mando lógico (0..100 %) al rango de grados del servo." alt="" coords="151,5,266,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,34,138,30,133,32,101,39"/>
+<area shape="rect" id="Node000003" href="$group___c_o_n_t_r_o_l.html#gacea260ba8426e8c1691a1c2e0a1061c7" title="Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido." alt="" coords="148,56,270,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="100,49,135,56,130,57,100,54"/>
+</map>

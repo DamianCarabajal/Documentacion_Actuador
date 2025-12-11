@@ -1,0 +1,161 @@
+\doxysection{src/\+Actuador.ino File Reference}
+\hypertarget{_actuador_8ino}{}\label{_actuador_8ino}\index{src/Actuador.ino@{src/Actuador.ino}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$ESP32\+Servo.\+h$>$}\newline
+{\ttfamily \#include $<$Wi\+Fi.\+h$>$}\newline
+{\ttfamily \#include $<$Pub\+Sub\+Client.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+Include dependency graph for Actuador.\+ino\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_actuador_8ino__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_actuador_8ino_a10c7fdad00fefa633fa0704705f8023f}{RGB\+\_\+\+BRIGHTNESS}}~64
+\begin{DoxyCompactList}\small\item\em Brillo lógico utilizado para el LED integrado (0..255). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_actuador_8ino_a2b36dbe561f0416b5a525fcf0e51fa76}{set\+Led\+Color}} (uint8\+\_\+t r, uint8\+\_\+t g, uint8\+\_\+t b)
+\begin{DoxyCompactList}\small\item\em Actualiza el color lógico del LED y enciende/apaga el LED integrado. \end{DoxyCompactList}\item 
+Pub\+Sub\+Client \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga0a5b11ce031fde6b1147647ff4387307}{mqtt}} (\mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}{wifi\+Client}})
+\item 
+float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2}{scale\+To\+Degrees}} (float u)
+\begin{DoxyCompactList}\small\item\em Escala el mando lógico (0..100 \%) al rango de grados del servo. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633}{recalculate\+Coefficients}} ()
+\begin{DoxyCompactList}\small\item\em Recalcula los coeficientes del PI discreto (Kpos, Kneg) usando Tustin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}{set\+Servo\+Degrees}} (float deg)
+\begin{DoxyCompactList}\small\item\em Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6}{apply\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Aplica un paso del controlador PI discreto y actualiza el servo. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}{control\+\_\+task}} (void \texorpdfstring{$\ast$}{*}parameter)
+\begin{DoxyCompactList}\small\item\em Tarea de control discreto (PI + servo + logging). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a}{mqtt\+\_\+task}} (void \texorpdfstring{$\ast$}{*}parameter)
+\begin{DoxyCompactList}\small\item\em Tarea de comunicaciones (gestión de Wi\+Fi y MQTT). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Función de inicialización del firmware. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_actuador_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Bucle principal de Arduino (no utilizado). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Servo \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga79efceea669fb85a732c30f47cf7e59c}{servo}}
+\item 
+volatile uint32\+\_\+t \mbox{\hyperlink{_actuador_8ino_a77c5b81f51aae1e19d8421c9397a41cf}{current\+\_\+color}} = 0
+\begin{DoxyCompactList}\small\item\em Color lógico actual del LED, empaquetado como 0x\+RRGGBB. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5}{Kp}} = 5.\+0f
+\begin{DoxyCompactList}\small\item\em Ganancia proporcional del controlador PI (Kp de MATLAB). \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006}{Ti}} = 250.\+0f
+\begin{DoxyCompactList}\small\item\em Tiempo integral del controlador PI (Ti de MATLAB) en segundos. \end{DoxyCompactList}\item 
+const uint32\+\_\+t \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga52708d1ff2cbb3ff282cb121167be23d}{CONTROL\+\_\+\+INTERVAL\+\_\+\+MS}} = (uint32\+\_\+t)(Tm \texorpdfstring{$\ast$}{*} 1000.\+0f)
+\begin{DoxyCompactList}\small\item\em Intervalo de ejecución del lazo de control en milisegundos. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga0204e4eac61b110fc8f5e0670addc015}{Kpos}}
+\begin{DoxyCompactList}\small\item\em Coeficiente b0 del PI discreto en la forma de Tustin. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga7a3375e7009b05ff043398f5eb048bea}{Kneg}}
+\begin{DoxyCompactList}\small\item\em Coeficiente b1 del PI discreto en la forma de Tustin. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Salida lógica actual del controlador PI, en \% (0..100). \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0}{pos\+\_\+deg}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Posición actual del servo en grados físicos. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9}{temp\+\_\+setpoint}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Temperatura de consigna (SP) recibida por MQTT. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555}{temp\+\_\+actual}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Temperatura de proceso (PV) recibida por MQTT. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Error de control en el instante k-\/1 (e\mbox{[}k-\/1\mbox{]}). \end{DoxyCompactList}\item 
+volatile unsigned long \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga487d677d2b5edafc3cd7c9ed6cbd1ebc}{sample\+Index}} = 0
+\begin{DoxyCompactList}\small\item\em Índice de muestra del lazo de control (k). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga3a1afe1420848deb739eeda7c1bb700a}{initial\+\_\+state\+\_\+reset}} = false
+\begin{DoxyCompactList}\small\item\em Indica si ya se realizó el reseteo de estado inicial del controlador PI. \end{DoxyCompactList}\item 
+Wi\+Fi\+Client \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}{wifi\+Client}}
+\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Tópicos de suscripción para sintonización del PI}\par
+\end{Indent}
+\begin{Indent}\textbf{ Tópicos de suscripción para señales de control}\par
+\end{Indent}
+\begin{Indent}\textbf{ Tópicos de publicación de estado}\par
+\end{Indent}
+
+
+\label{doc-define-members}
+\Hypertarget{_actuador_8ino_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_actuador_8ino_a10c7fdad00fefa633fa0704705f8023f}\index{Actuador.ino@{Actuador.ino}!RGB\_BRIGHTNESS@{RGB\_BRIGHTNESS}}
+\index{RGB\_BRIGHTNESS@{RGB\_BRIGHTNESS}!Actuador.ino@{Actuador.ino}}
+\doxysubsubsection{\texorpdfstring{RGB\_BRIGHTNESS}{RGB\_BRIGHTNESS}}
+{\footnotesize\ttfamily \label{_actuador_8ino_a10c7fdad00fefa633fa0704705f8023f} 
+\#define RGB\+\_\+\+BRIGHTNESS~64}
+
+
+
+Brillo lógico utilizado para el LED integrado (0..255). 
+
+\begin{DoxyNote}{Note}
+Actualmente solo se usa para decidir encendido/apagado, no para controlar un LED RGB real. 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{_actuador_8ino_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_actuador_8ino_afe461d27b9c48d5921c00d521181f12f}\index{Actuador.ino@{Actuador.ino}!loop@{loop}}
+\index{loop@{loop}!Actuador.ino@{Actuador.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{_actuador_8ino_afe461d27b9c48d5921c00d521181f12f} 
+void loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Bucle principal de Arduino (no utilizado). 
+
+Todas las funcionalidades del sistema están implementadas en las tareas Free\+RTOS. Esta función permanece vacía. \Hypertarget{_actuador_8ino_a2b36dbe561f0416b5a525fcf0e51fa76}\index{Actuador.ino@{Actuador.ino}!setLedColor@{setLedColor}}
+\index{setLedColor@{setLedColor}!Actuador.ino@{Actuador.ino}}
+\doxysubsubsection{\texorpdfstring{setLedColor()}{setLedColor()}}
+{\footnotesize\ttfamily \label{_actuador_8ino_a2b36dbe561f0416b5a525fcf0e51fa76} 
+void set\+Led\+Color (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{r}{, }\item[{uint8\+\_\+t}]{g}{, }\item[{uint8\+\_\+t}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Actualiza el color lógico del LED y enciende/apaga el LED integrado. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{in}}  & {\em r} & Componente rojo (0..255). \\
+\hline
+\mbox{\texttt{in}}  & {\em g} & Componente verde (0..255). \\
+\hline
+\mbox{\texttt{in}}  & {\em b} & Componente azul (0..255).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Actualmente el hardware solo permite un LED "{}on/off"{}, por lo que se enciende el pin {\ttfamily RGB\+\_\+\+BUILTIN} si el color es distinto de negro. El valor de \doxylink{_actuador_8ino_a77c5b81f51aae1e19d8421c9397a41cf}{current\+\_\+color} se mantiene para futuros usos. 
+\end{DoxyNote}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{_actuador_8ino_a2b36dbe561f0416b5a525fcf0e51fa76_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{_actuador_8ino_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_actuador_8ino_a77c5b81f51aae1e19d8421c9397a41cf}\index{Actuador.ino@{Actuador.ino}!current\_color@{current\_color}}
+\index{current\_color@{current\_color}!Actuador.ino@{Actuador.ino}}
+\doxysubsubsection{\texorpdfstring{current\_color}{current\_color}}
+{\footnotesize\ttfamily \label{_actuador_8ino_a77c5b81f51aae1e19d8421c9397a41cf} 
+volatile uint32\+\_\+t current\+\_\+color = 0}
+
+
+
+Color lógico actual del LED, empaquetado como 0x\+RRGGBB. 
+
+Se utiliza para recordar el estado previo del LED y restaurarlo luego de pequeños pulsos de actividad (por ejemplo, en la tarea de control). 

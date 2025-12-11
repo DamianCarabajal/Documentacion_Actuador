@@ -1,0 +1,119 @@
+\doxysection{Manejo de Tareas Free\+RTOS }
+\hypertarget{group___r_t_o_s___t_a_s_k_s}{}\label{group___r_t_o_s___t_a_s_k_s}\index{Manejo de Tareas FreeRTOS@{Manejo de Tareas FreeRTOS}}
+
+
+Organización de la ejecución en tiempo real mediante tareas Free\+RTOS.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}{control\+\_\+task}} (void \texorpdfstring{$\ast$}{*}parameter)
+\begin{DoxyCompactList}\small\item\em Tarea de control discreto (PI + servo + logging). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Función de inicialización del firmware. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Organización de la ejecución en tiempo real mediante tareas Free\+RTOS. 
+
+Este módulo\+:
+\begin{DoxyItemize}
+\item Define la tarea de control discreto (\doxylink{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}{control\+\_\+task}).
+\item Define la tarea de comunicaciones (\doxylink{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a}{mqtt\+\_\+task}).
+\item Crea y configura las tareas desde \doxylink{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d}{setup()}. 
+\end{DoxyItemize}
+
+\label{doc-func-members}
+\Hypertarget{group___r_t_o_s___t_a_s_k_s_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}\index{Manejo de Tareas FreeRTOS@{Manejo de Tareas FreeRTOS}!control\_task@{control\_task}}
+\index{control\_task@{control\_task}!Manejo de Tareas FreeRTOS@{Manejo de Tareas FreeRTOS}}
+\doxysubsubsection{\texorpdfstring{control\_task()}{control\_task()}}
+{\footnotesize\ttfamily \label{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b} 
+void control\+\_\+task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameter}{}\end{DoxyParamCaption})}
+
+
+
+Tarea de control discreto (PI + servo + logging). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{in}}  & {\em parameter} & Puntero genérico no utilizado (debe ser {\ttfamily NULL}).\\
+\hline
+\end{DoxyParams}
+La tarea\+:
+\begin{DoxyItemize}
+\item Se ejecuta periódicamente cada \doxylink{group___c_o_n_t_r_o_l_ga52708d1ff2cbb3ff282cb121167be23d}{CONTROL\+\_\+\+INTERVAL\+\_\+\+MS} milisegundos mediante v\+Task\+Delay\+Until().
+\item Verifica que exista conexión Wi\+Fi y MQTT antes de aplicar el control.
+\item Aplica la lógica de reseteo inicial del PI cuando \doxylink{group___c_o_n_t_r_o_l_ga487d677d2b5edafc3cd7c9ed6cbd1ebc}{sample\+Index} == 5\+:
+\begin{DoxyItemize}
+\item Fuerza \doxylink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic} = 50 \%.
+\item Resetea \doxylink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1}.
+\item Igual \doxylink{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555}{temp\+\_\+actual} a \doxylink{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9}{temp\+\_\+setpoint}.
+\end{DoxyItemize}
+\item Llama a \doxylink{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6}{apply\+Control()} y publish\+State().
+\item Envía al puerto serie un log en formato CSV\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{k,t,SP,PV,U\_logic,Deg}
+
+\end{DoxyCode}
+
+\item Genera un breve pulso del LED para indicar actividad de control.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Esta tarea nunca retorna. 
+\end{DoxyNote}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d}\index{Manejo de Tareas FreeRTOS@{Manejo de Tareas FreeRTOS}!setup@{setup}}
+\index{setup@{setup}!Manejo de Tareas FreeRTOS@{Manejo de Tareas FreeRTOS}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d} 
+void setup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Función de inicialización del firmware. 
+
+Realiza\+:
+\begin{DoxyItemize}
+\item Inicialización del puerto serie y encabezado de log CSV.
+\item Inicialización del LED integrado (apagado).
+\item Cálculo inicial de los coeficientes del PI discreto.
+\item Configuración y posicionamiento inicial del servo.
+\item Conexión inicial a la red Wi\+Fi con timeout de 10 s.
+\item Configuración del cliente MQTT y registro del callback.
+\item Creación de las tareas Free\+RTOS\+:
+\begin{DoxyItemize}
+\item \doxylink{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}{control\+\_\+task} con prioridad 3.
+\item \doxylink{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a}{mqtt\+\_\+task} con prioridad 2.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+La lógica de control y comunicaciones queda delegada por completo a las tareas. 
+\end{DoxyNote}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}

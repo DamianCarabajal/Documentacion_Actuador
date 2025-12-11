@@ -1,0 +1,25 @@
+<map id="setup" name="setup">
+<area shape="rect" id="Node000001" title="Función de inicialización del firmware." alt="" coords="5,109,59,136"/>
+<area shape="rect" id="Node000002" href="$group___r_t_o_s___t_a_s_k_s.html#gab5ce0b7cdd97cf9ef50fbe8d77d1096b" title="Tarea de control discreto (PI + servo + logging)." alt="" coords="137,109,230,136"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="58,120,124,121,120,124,60,125"/>
+<area shape="rect" id="Node000004" href="$group___c_o_n_t_r_o_l.html#ga925c721eb55d9682fef06252d112dcd2" title="Escala el mando lógico (0..100 %) al rango de grados del servo." alt="" coords="454,135,569,161"/>
+<area shape="poly" id="edge12_Node000001_Node000004" title=" " alt="" coords="36,108,60,62,80,38,105,19,146,5,181,5,216,12,260,19,334,23,366,29,404,44,430,60,454,80,493,123,488,122,451,84,427,65,401,49,364,34,333,28,260,24,215,17,180,10,147,10,108,24,84,41,65,65,41,110"/>
+<area shape="rect" id="Node000005" href="$group___c_o_n_t_r_o_l.html#gacea260ba8426e8c1691a1c2e0a1061c7" title="Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido." alt="" coords="450,185,573,212"/>
+<area shape="poly" id="edge14_Node000001_Node000005" title=" " alt="" coords="55,134,108,159,193,181,281,194,364,199,437,202,432,203,364,204,280,199,192,186,106,164,55,139"/>
+<area shape="rect" id="Node000006" href="$group___c_o_m_m_s___m_q_t_t.html#ga0a5b11ce031fde6b1147647ff4387307" title=" " alt="" coords="332,59,379,85"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="39,107,65,74,84,57,106,44,133,35,162,31,219,32,273,41,319,56,314,58,272,47,219,37,162,36,134,40,108,49,87,61,69,77,44,110"/>
+<area shape="rect" id="Node000007" href="$_actuador_8ino.html#a2b36dbe561f0416b5a525fcf0e51fa76" title="Actualiza el color lógico del LED y enciende/apaga el LED integrado." alt="" coords="310,109,401,136"/>
+<area shape="poly" id="edge13_Node000001_Node000007" title=" " alt="" coords="59,131,107,145,183,153,260,145,300,139,295,141,260,150,183,158,106,150,60,136"/>
+<area shape="rect" id="Node000008" href="$group___c_o_m_m_s___m_q_t_t.html#ga220b4d4869da7bcb2cbcd53a15114e4a" title="Tarea de comunicaciones (gestión de WiFi y MQTT)." alt="" coords="144,59,223,85"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="58,111,106,95,131,88,127,91,108,100,61,116"/>
+<area shape="rect" id="Node000009" href="$group___c_o_n_t_r_o_l.html#ga30aef7aa41c94e63722977e5c4fb9633" title="Recalcula los coeficientes del PI discreto (Kpos, Kneg) usando Tustin." alt="" coords="107,261,260,288"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="39,134,65,186,85,215,108,240,126,254,121,254,105,245,80,218,61,189,38,139"/>
+<area shape="rect" id="Node000003" href="$group___c_o_n_t_r_o_l.html#gaa9efa0560459f02fc6aba6ef5902edf6" title="Aplica un paso del controlador PI discreto y actualiza el servo." alt="" coords="308,160,402,187"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,133,296,154,291,156,230,139"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="229,106,319,82,314,84,231,111"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="229,120,297,121,292,124,231,125"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="402,163,441,159,436,160,403,168"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="403,178,438,186,432,186,403,183"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="223,69,318,71,314,73,224,74"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="223,81,297,104,292,106,224,86"/>
+</map>

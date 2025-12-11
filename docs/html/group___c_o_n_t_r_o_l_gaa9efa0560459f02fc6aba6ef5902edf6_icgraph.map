@@ -1,0 +1,7 @@
+<map id="applyControl" name="applyControl">
+<area shape="rect" id="Node000001" title="Aplica un paso del controlador PI discreto y actualiza el servo." alt="" coords="247,5,341,32"/>
+<area shape="rect" id="Node000002" href="$group___r_t_o_s___t_a_s_k_s.html#gab5ce0b7cdd97cf9ef50fbe8d77d1096b" title="Tarea de control discreto (PI + servo + logging)." alt="" coords="107,5,199,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,19,199,21,199,16,234,19"/>
+<area shape="rect" id="Node000003" href="$group___r_t_o_s___t_a_s_k_s.html#ga4fc01d736fe50cf5b977f755b675f11d" title="Función de inicialización del firmware." alt="" coords="5,5,59,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="88,19,59,21,59,16,94,18"/>
+</map>

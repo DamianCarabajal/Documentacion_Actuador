@@ -1,0 +1,13 @@
+<map id="control_task" name="control_task">
+<area shape="rect" id="Node000001" title="Tarea de control discreto (PI + servo + logging)." alt="" coords="5,81,98,108"/>
+<area shape="rect" id="Node000002" href="$group___c_o_n_t_r_o_l.html#gaa9efa0560459f02fc6aba6ef5902edf6" title="Aplica un paso del controlador PI discreto y actualiza el servo." alt="" coords="146,31,240,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,78,141,61,137,65,92,83"/>
+<area shape="rect" id="Node000005" href="$group___c_o_m_m_s___m_q_t_t.html#ga0a5b11ce031fde6b1147647ff4387307" title=" " alt="" coords="169,81,216,108"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="98,92,156,93,151,96,99,97"/>
+<area shape="rect" id="Node000006" href="$_actuador_8ino.html#a2b36dbe561f0416b5a525fcf0e51fa76" title="Actualiza el color lógico del LED y enciende/apaga el LED integrado." alt="" coords="147,132,238,159"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="91,106,142,125,137,127,91,111"/>
+<area shape="rect" id="Node000003" href="$group___c_o_n_t_r_o_l.html#ga925c721eb55d9682fef06252d112dcd2" title="Escala el mando lógico (0..100 %) al rango de grados del servo." alt="" coords="292,5,407,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,34,278,30,273,31,241,39"/>
+<area shape="rect" id="Node000004" href="$group___c_o_n_t_r_o_l.html#gacea260ba8426e8c1691a1c2e0a1061c7" title="Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido." alt="" coords="288,56,410,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="240,49,275,56,270,57,240,54"/>
+</map>

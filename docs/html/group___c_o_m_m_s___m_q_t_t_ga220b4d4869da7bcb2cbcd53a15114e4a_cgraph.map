@@ -1,0 +1,7 @@
+<map id="mqtt_task" name="mqtt_task">
+<area shape="rect" id="Node000001" title="Tarea de comunicaciones (gestión de WiFi y MQTT)." alt="" coords="5,31,85,57"/>
+<area shape="rect" id="Node000002" href="$group___c_o_m_m_s___m_q_t_t.html#ga0a5b11ce031fde6b1147647ff4387307" title=" " alt="" coords="155,5,202,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,34,142,25,137,27,86,39"/>
+<area shape="rect" id="Node000003" href="$_actuador_8ino.html#a2b36dbe561f0416b5a525fcf0e51fa76" title="Actualiza el color lógico del LED y enciende/apaga el LED integrado." alt="" coords="133,56,224,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="85,49,120,57,114,58,85,54"/>
+</map>

@@ -1,0 +1,336 @@
+\doxysection{Control del Proceso y Actuador }
+\hypertarget{group___c_o_n_t_r_o_l}{}\label{group___c_o_n_t_r_o_l}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+
+
+Implementa el controlador PI discreto y el actuador físico (servo).  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2}{scale\+To\+Degrees}} (float u)
+\begin{DoxyCompactList}\small\item\em Escala el mando lógico (0..100 \%) al rango de grados del servo. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633}{recalculate\+Coefficients}} ()
+\begin{DoxyCompactList}\small\item\em Recalcula los coeficientes del PI discreto (Kpos, Kneg) usando Tustin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}{set\+Servo\+Degrees}} (float deg)
+\begin{DoxyCompactList}\small\item\em Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6}{apply\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Aplica un paso del controlador PI discreto y actualiza el servo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Servo \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga79efceea669fb85a732c30f47cf7e59c}{servo}}
+\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5}{Kp}} = 5.\+0f
+\begin{DoxyCompactList}\small\item\em Ganancia proporcional del controlador PI (Kp de MATLAB). \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006}{Ti}} = 250.\+0f
+\begin{DoxyCompactList}\small\item\em Tiempo integral del controlador PI (Ti de MATLAB) en segundos. \end{DoxyCompactList}\item 
+const uint32\+\_\+t \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga52708d1ff2cbb3ff282cb121167be23d}{CONTROL\+\_\+\+INTERVAL\+\_\+\+MS}} = (uint32\+\_\+t)(Tm \texorpdfstring{$\ast$}{*} 1000.\+0f)
+\begin{DoxyCompactList}\small\item\em Intervalo de ejecución del lazo de control en milisegundos. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga0204e4eac61b110fc8f5e0670addc015}{Kpos}}
+\begin{DoxyCompactList}\small\item\em Coeficiente b0 del PI discreto en la forma de Tustin. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga7a3375e7009b05ff043398f5eb048bea}{Kneg}}
+\begin{DoxyCompactList}\small\item\em Coeficiente b1 del PI discreto en la forma de Tustin. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Salida lógica actual del controlador PI, en \% (0..100). \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0}{pos\+\_\+deg}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Posición actual del servo en grados físicos. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9}{temp\+\_\+setpoint}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Temperatura de consigna (SP) recibida por MQTT. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555}{temp\+\_\+actual}} = 25.\+0f
+\begin{DoxyCompactList}\small\item\em Temperatura de proceso (PV) recibida por MQTT. \end{DoxyCompactList}\item 
+volatile float \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Error de control en el instante k-\/1 (e\mbox{[}k-\/1\mbox{]}). \end{DoxyCompactList}\item 
+volatile unsigned long \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga487d677d2b5edafc3cd7c9ed6cbd1ebc}{sample\+Index}} = 0
+\begin{DoxyCompactList}\small\item\em Índice de muestra del lazo de control (k). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group___c_o_n_t_r_o_l_ga3a1afe1420848deb739eeda7c1bb700a}{initial\+\_\+state\+\_\+reset}} = false
+\begin{DoxyCompactList}\small\item\em Indica si ya se realizó el reseteo de estado inicial del controlador PI. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementa el controlador PI discreto y el actuador físico (servo). 
+
+Este módulo\+:
+\begin{DoxyItemize}
+\item Mantiene los parámetros y estados del controlador PI discretizado por Tustin.
+\item Recibe SP y PV desde el módulo de comunicaciones (\doxylink{group___c_o_m_m_s___m_q_t_t}{Comunicación Wi\+Fi/\+MQTT}).
+\item Entrega un mando lógico (0..100 \%) que se mapea a grados de servo. 
+\end{DoxyItemize}
+
+\label{doc-func-members}
+\Hypertarget{group___c_o_n_t_r_o_l_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!applyControl@{applyControl}}
+\index{applyControl@{applyControl}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{applyControl()}{applyControl()}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6} 
+void apply\+Control (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Aplica un paso del controlador PI discreto y actualiza el servo. 
+
+Implementa el algoritmo recursivo\+:   \[  u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\] donde $ e[k] = SP - PV $.
+
+Luego\+:
+\begin{DoxyItemize}
+\item Se satura $ u[k] $ al rango 0..100 \%.
+\item Se actualizan \doxylink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1} y \doxylink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic}.
+\item Se convierte $ u[k] $ a grados de servo y se llama a \doxylink{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}{set\+Servo\+Degrees()}. 
+\end{DoxyItemize}Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!recalculateCoefficients@{recalculateCoefficients}}
+\index{recalculateCoefficients@{recalculateCoefficients}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{recalculateCoefficients()}{recalculateCoefficients()}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633} 
+void recalculate\+Coefficients (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Recalcula los coeficientes del PI discreto (Kpos, Kneg) usando Tustin. 
+
+Equivalente a la discretización realizada en MATLAB con\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{controladorZ\ =\ c2d(controlador,\ Tm,\ \textcolor{stringliteral}{'tustin'});}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Se llama\+:
+\begin{DoxyItemize}
+\item En \doxylink{group___r_t_o_s___t_a_s_k_s_ga4fc01d736fe50cf5b977f755b675f11d}{setup()}, para inicializar el controlador.
+\item Cuando se actualizan \doxylink{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5}{Kp} o \doxylink{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006}{Ti} vía MQTT. 
+\end{DoxyItemize}
+\end{DoxyNote}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!scaleToDegrees@{scaleToDegrees}}
+\index{scaleToDegrees@{scaleToDegrees}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{scaleToDegrees()}{scaleToDegrees()}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2} 
+float scale\+To\+Degrees (\begin{DoxyParamCaption}\item[{float}]{u}{}\end{DoxyParamCaption})}
+
+
+
+Escala el mando lógico (0..100 \%) al rango de grados del servo. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{in}}  & {\em u} & Mando lógico en porcentaje (0..100). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Ángulo en grados dentro del rango \mbox{[}SERVO\+\_\+\+DEG\+\_\+\+MIN, SERVO\+\_\+\+DEG\+\_\+\+MAX\mbox{]}. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!setServoDegrees@{setServoDegrees}}
+\index{setServoDegrees@{setServoDegrees}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{setServoDegrees()}{setServoDegrees()}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7} 
+void set\+Servo\+Degrees (\begin{DoxyParamCaption}\item[{float}]{deg}{}\end{DoxyParamCaption})}
+
+
+
+Aplica un ángulo al servo, saturando al rango permitido e invirtiendo el sentido. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{in}}  & {\em deg} & Ángulo deseado en grados.\\
+\hline
+\end{DoxyParams}
+La función\+:
+\begin{DoxyItemize}
+\item Satura {\ttfamily deg} al rango \mbox{[}SERVO\+\_\+\+DEG\+\_\+\+MIN, SERVO\+\_\+\+DEG\+\_\+\+MAX\mbox{]}.
+\item Actualiza la variable global \doxylink{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0}{pos\+\_\+deg}.
+\item Llama a servo.\+write() con el ángulo invertido (180 -\/ deg) según el montaje físico. 
+\end{DoxyItemize}Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{group___c_o_n_t_r_o_l_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{group___c_o_n_t_r_o_l_ga52708d1ff2cbb3ff282cb121167be23d}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!CONTROL\_INTERVAL\_MS@{CONTROL\_INTERVAL\_MS}}
+\index{CONTROL\_INTERVAL\_MS@{CONTROL\_INTERVAL\_MS}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{CONTROL\_INTERVAL\_MS}{CONTROL\_INTERVAL\_MS}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga52708d1ff2cbb3ff282cb121167be23d} 
+const uint32\+\_\+t CONTROL\+\_\+\+INTERVAL\+\_\+\+MS = (uint32\+\_\+t)(Tm \texorpdfstring{$\ast$}{*} 1000.\+0f)}
+
+
+
+Intervalo de ejecución del lazo de control en milisegundos. 
+
+\Hypertarget{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!error\_k\_1@{error\_k\_1}}
+\index{error\_k\_1@{error\_k\_1}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{error\_k\_1}{error\_k\_1}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc} 
+volatile float error\+\_\+k\+\_\+1 = 0.\+0f}
+
+
+
+Error de control en el instante k-\/1 (e\mbox{[}k-\/1\mbox{]}). 
+
+Se utiliza por el algoritmo recursivo del PI discreto\+:   \[   u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\] \Hypertarget{group___c_o_n_t_r_o_l_ga3a1afe1420848deb739eeda7c1bb700a}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!initial\_state\_reset@{initial\_state\_reset}}
+\index{initial\_state\_reset@{initial\_state\_reset}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{initial\_state\_reset}{initial\_state\_reset}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga3a1afe1420848deb739eeda7c1bb700a} 
+bool initial\+\_\+state\+\_\+reset = false}
+
+
+
+Indica si ya se realizó el reseteo de estado inicial del controlador PI. 
+
+El reseteo inicial fuerza\+:
+\begin{DoxyItemize}
+\item \doxylink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic} = 50 \%
+\item \doxylink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1} = 0
+\item \doxylink{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555}{temp\+\_\+actual} = \doxylink{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9}{temp\+\_\+setpoint}
+\end{DoxyItemize}
+
+Esto permite comenzar desde una condición de estado estacionario. \Hypertarget{group___c_o_n_t_r_o_l_ga7a3375e7009b05ff043398f5eb048bea}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!Kneg@{Kneg}}
+\index{Kneg@{Kneg}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{Kneg}{Kneg}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga7a3375e7009b05ff043398f5eb048bea} 
+volatile float Kneg}
+
+
+
+Coeficiente b1 del PI discreto en la forma de Tustin. 
+
+\Hypertarget{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!Kp@{Kp}}
+\index{Kp@{Kp}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{Kp}{Kp}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5} 
+volatile float Kp = 5.\+0f}
+
+
+
+Ganancia proporcional del controlador PI (Kp de MATLAB). 
+
+\begin{DoxyNote}{Note}
+Se puede actualizar en tiempo de ejecución vía MQTT en el tópico {\ttfamily emu/kp\+\_\+set}. 
+\end{DoxyNote}
+\Hypertarget{group___c_o_n_t_r_o_l_ga0204e4eac61b110fc8f5e0670addc015}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!Kpos@{Kpos}}
+\index{Kpos@{Kpos}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{Kpos}{Kpos}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga0204e4eac61b110fc8f5e0670addc015} 
+volatile float Kpos}
+
+
+
+Coeficiente b0 del PI discreto en la forma de Tustin. 
+
+Los coeficientes se recalculan en \doxylink{group___c_o_n_t_r_o_l_ga30aef7aa41c94e63722977e5c4fb9633}{recalculate\+Coefficients()}. \Hypertarget{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!pos\_deg@{pos\_deg}}
+\index{pos\_deg@{pos\_deg}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{pos\_deg}{pos\_deg}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0} 
+volatile float pos\+\_\+deg = 0.\+0f}
+
+
+
+Posición actual del servo en grados físicos. 
+
+\Hypertarget{group___c_o_n_t_r_o_l_ga487d677d2b5edafc3cd7c9ed6cbd1ebc}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!sampleIndex@{sampleIndex}}
+\index{sampleIndex@{sampleIndex}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{sampleIndex}{sampleIndex}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga487d677d2b5edafc3cd7c9ed6cbd1ebc} 
+volatile unsigned long sample\+Index = 0}
+
+
+
+Índice de muestra del lazo de control (k). 
+
+Se incrementa en \doxylink{group___r_t_o_s___t_a_s_k_s_gab5ce0b7cdd97cf9ef50fbe8d77d1096b}{control\+\_\+task} y se utiliza para\+:
+\begin{DoxyItemize}
+\item Logging en forma de CSV para MATLAB.
+\item Implementar la lógica de reset inicial del PI cuando {\ttfamily sample\+Index} == 5. 
+\end{DoxyItemize}\Hypertarget{group___c_o_n_t_r_o_l_ga79efceea669fb85a732c30f47cf7e59c}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!servo@{servo}}
+\index{servo@{servo}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{servo}{servo}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga79efceea669fb85a732c30f47cf7e59c} 
+Servo servo}
+
+Objeto servo utilizado como actuador principal. \Hypertarget{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!temp\_actual@{temp\_actual}}
+\index{temp\_actual@{temp\_actual}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{temp\_actual}{temp\_actual}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga569ca9c40aacbe895391bb59ba6e2555} 
+volatile float temp\+\_\+actual = 25.\+0f}
+
+
+
+Temperatura de proceso (PV) recibida por MQTT. 
+
+\Hypertarget{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!temp\_setpoint@{temp\_setpoint}}
+\index{temp\_setpoint@{temp\_setpoint}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{temp\_setpoint}{temp\_setpoint}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga84844845418efe595152ab015bb217b9} 
+volatile float temp\+\_\+setpoint = 25.\+0f}
+
+
+
+Temperatura de consigna (SP) recibida por MQTT. 
+
+\Hypertarget{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!Ti@{Ti}}
+\index{Ti@{Ti}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{Ti}{Ti}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006} 
+volatile float Ti = 250.\+0f}
+
+
+
+Tiempo integral del controlador PI (Ti de MATLAB) en segundos. 
+
+\begin{DoxyNote}{Note}
+Se puede actualizar vía MQTT en el tópico {\ttfamily emu/ti\+\_\+set}. 
+\end{DoxyNote}
+\Hypertarget{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}\index{Control del Proceso y Actuador@{Control del Proceso y Actuador}!u\_logic@{u\_logic}}
+\index{u\_logic@{u\_logic}!Control del Proceso y Actuador@{Control del Proceso y Actuador}}
+\doxysubsubsection{\texorpdfstring{u\_logic}{u\_logic}}
+{\footnotesize\ttfamily \label{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3} 
+volatile float u\+\_\+logic = 25.\+0f}
+
+
+
+Salida lógica actual del controlador PI, en \% (0..100). 
+
+Esta es la variable de mando en unidades lógicas. Luego se mapea a grados de servo mediante \doxylink{group___c_o_n_t_r_o_l_ga925c721eb55d9682fef06252d112dcd2}{scale\+To\+Degrees()} y \doxylink{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}{set\+Servo\+Degrees()}.
+
+\begin{DoxyNote}{Note}
+Se inicializa en 25 \% y luego, tras el reset inicial (a los 5 s), se fuerza a 50 \% como condición de estado estacionario. 
+\end{DoxyNote}

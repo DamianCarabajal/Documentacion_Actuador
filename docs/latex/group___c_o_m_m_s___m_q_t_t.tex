@@ -1,0 +1,112 @@
+\doxysection{Comunicación Wi\+Fi/\+MQTT }
+\hypertarget{group___c_o_m_m_s___m_q_t_t}{}\label{group___c_o_m_m_s___m_q_t_t}\index{Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}}
+
+
+Gestión de la conectividad Wi\+Fi y del enlace con el broker MQTT.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Pub\+Sub\+Client \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga0a5b11ce031fde6b1147647ff4387307}{mqtt}} (\mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}{wifi\+Client}})
+\item 
+void \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a}{mqtt\+\_\+task}} (void \texorpdfstring{$\ast$}{*}parameter)
+\begin{DoxyCompactList}\small\item\em Tarea de comunicaciones (gestión de Wi\+Fi y MQTT). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Wi\+Fi\+Client \mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}{wifi\+Client}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Gestión de la conectividad Wi\+Fi y del enlace con el broker MQTT. 
+
+Este módulo\+:
+\begin{DoxyItemize}
+\item Establece la conexión Wi\+Fi.
+\item Gestiona la conexión al broker MQTT y la suscripción a tópicos (SP, PV, Kp, Ti).
+\item Publica el estado del controlador (U lógica) y la posición del servo.
+\item Interpreta los mensajes de entrada para actualizar variables del módulo \doxylink{group___c_o_n_t_r_o_l}{Control del Proceso y Actuador}. 
+\end{DoxyItemize}
+
+\label{doc-func-members}
+\Hypertarget{group___c_o_m_m_s___m_q_t_t_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{group___c_o_m_m_s___m_q_t_t_ga0a5b11ce031fde6b1147647ff4387307}\index{Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}!mqtt@{mqtt}}
+\index{mqtt@{mqtt}!Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}}
+\doxysubsubsection{\texorpdfstring{mqtt()}{mqtt()}}
+{\footnotesize\ttfamily \label{group___c_o_m_m_s___m_q_t_t_ga0a5b11ce031fde6b1147647ff4387307} 
+Pub\+Sub\+Client mqtt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}{wifi\+Client}}}]{}{}\end{DoxyParamCaption})}
+
+Cliente MQTT basado en Pub\+Sub\+Client. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=297pt]{group___c_o_m_m_s___m_q_t_t_ga0a5b11ce031fde6b1147647ff4387307_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a}\index{Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}!mqtt\_task@{mqtt\_task}}
+\index{mqtt\_task@{mqtt\_task}!Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}}
+\doxysubsubsection{\texorpdfstring{mqtt\_task()}{mqtt\_task()}}
+{\footnotesize\ttfamily \label{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a} 
+void mqtt\+\_\+task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameter}{}\end{DoxyParamCaption})}
+
+
+
+Tarea de comunicaciones (gestión de Wi\+Fi y MQTT). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{in}}  & {\em parameter} & Puntero genérico no utilizado (debe ser {\ttfamily NULL}).\\
+\hline
+\end{DoxyParams}
+La tarea\+:
+\begin{DoxyItemize}
+\item Supervisa permanentemente el estado de la conexión Wi\+Fi.
+\item En caso de desconexión\+:
+\begin{DoxyItemize}
+\item Muestra el LED en rojo.
+\item Registra mensajes de diagnóstico por serie.
+\item Reintenta la conexión Wi\+Fi con un período definido.
+\end{DoxyItemize}
+\item Cuando hay conexión Wi\+Fi\+:
+\begin{DoxyItemize}
+\item Muestra el LED en verde.
+\item Verifica y restablece la conexión MQTT si es necesario.
+\item Llama periódicamente a mqtt.\+loop().
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Si se pierde la comunicación con el broker, el lazo de control se congela en el último estado conocido, ya que los datos de SP, PV y sintonía se encuentran centralizados en el broker. 
+\end{DoxyNote}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{group___c_o_m_m_s___m_q_t_t_ga220b4d4869da7bcb2cbcd53a15114e4a_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{group___c_o_m_m_s___m_q_t_t_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a}\index{Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}!wifiClient@{wifiClient}}
+\index{wifiClient@{wifiClient}!Comunicación WiFi/MQTT@{Comunicación WiFi/MQTT}}
+\doxysubsubsection{\texorpdfstring{wifiClient}{wifiClient}}
+{\footnotesize\ttfamily \label{group___c_o_m_m_s___m_q_t_t_ga64f7c60366b0a82c42d7a1dbf4e9505a} 
+Wi\+Fi\+Client wifi\+Client}
+
+Cliente TCP/\+IP para la pila Wi\+Fi. 

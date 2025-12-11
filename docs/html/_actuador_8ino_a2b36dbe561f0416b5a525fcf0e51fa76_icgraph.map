@@ -1,0 +1,11 @@
+<map id="setLedColor" name="setLedColor">
+<area shape="rect" id="Node000001" title="Actualiza el color lógico del LED y enciende/apaga el LED integrado." alt="" coords="247,56,338,83"/>
+<area shape="rect" id="Node000002" href="$group___r_t_o_s___t_a_s_k_s.html#gab5ce0b7cdd97cf9ef50fbe8d77d1096b" title="Tarea de control discreto (PI + servo + logging)." alt="" coords="107,5,199,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,51,192,35,192,30,242,50"/>
+<area shape="rect" id="Node000003" href="$group___r_t_o_s___t_a_s_k_s.html#ga4fc01d736fe50cf5b977f755b675f11d" title="Función de inicialización del firmware." alt="" coords="5,56,59,83"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="231,72,60,72,59,67,232,67"/>
+<area shape="rect" id="Node000004" href="$group___c_o_m_m_s___m_q_t_t.html#ga220b4d4869da7bcb2cbcd53a15114e4a" title="Tarea de comunicaciones (gestión de WiFi y MQTT)." alt="" coords="113,107,192,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="242,88,193,109,191,104,237,89"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,41,61,61,58,56,107,36"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="103,102,59,83,60,78,108,99"/>
+</map>
