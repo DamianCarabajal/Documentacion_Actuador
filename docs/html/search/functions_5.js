@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['scaletodegrees_0',['scaleToDegrees',['../group___c_o_n_t_r_o_l.html#ga925c721eb55d9682fef06252d112dcd2',1,'Actuador.ino']]],
-  ['setledcolor_1',['setLedColor',['../_actuador_8ino.html#a2b36dbe561f0416b5a525fcf0e51fa76',1,'Actuador.ino']]],
-  ['setservodegrees_2',['setServoDegrees',['../group___c_o_n_t_r_o_l.html#gacea260ba8426e8c1691a1c2e0a1061c7',1,'Actuador.ino']]],
-  ['setup_3',['setup',['../group___r_t_o_s___t_a_s_k_s.html#ga4fc01d736fe50cf5b977f755b675f11d',1,'Actuador.ino']]]
+  ['recalculatecoefficients_0',['recalculateCoefficients',['../group___c_o_n_t_r_o_l.html#ga30aef7aa41c94e63722977e5c4fb9633',1,'Actuador.ino']]],
+  ['reconnect_5fmqtt_1',['reconnect_mqtt',['../group___n_o_d_e___s_e_n_s_o_r.html#ga36c917f8a7a7142669385533300ada1a',1,'Sensor.ino']]],
+  ['resolver_5fip_5fservidor_2',['resolver_ip_servidor',['../group___n_o_d_e___s_e_n_s_o_r.html#gad9400ea2895a0c2bc39ef904388122a9',1,'Sensor.ino']]]
 ];

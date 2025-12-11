@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['readme_2emd_0',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
-  ['recalculatecoefficients_1',['recalculateCoefficients',['../group___c_o_n_t_r_o_l.html#ga30aef7aa41c94e63722977e5c4fb9633',1,'Actuador.ino']]],
-  ['rgb_5fbrightness_2',['RGB_BRIGHTNESS',['../_actuador_8ino.html#a10c7fdad00fefa633fa0704705f8023f',1,'Actuador.ino']]]
+  ['password_0',['password',['../group___n_o_d_e___s_e_n_s_o_r.html#gaa4a2ebcb494493f648ae1e6975672575',1,'Sensor.ino']]],
+  ['pos_5fdeg_1',['pos_deg',['../group___c_o_n_t_r_o_l.html#gae830daba1919e7ebcb88d3eeb42ddce0',1,'Actuador.ino']]],
+  ['proceso_20y_20actuador_2',['Control del Proceso y Actuador',['../group___c_o_n_t_r_o_l.html',1,'']]]
 ];

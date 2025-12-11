@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Actuador - Proyecto Final Ingeniería Electrónica: Main Page</title>
+<title>Actuador - Proyecto Final Ingeniería Electrónica: Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,10 +87,168 @@ $(function(){initNavTree('index.html','',''); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Actuador - Proyecto Final Ingeniería Electrónica Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="intro_sec"></a>
+¿Qué es este sistema?</h1>
+<p>Este proyecto implementa un sistema IoT sencillo para el control de temperatura en una sala, utilizando dos nodos físicos y un broker MQTT:</p>
+<ul>
+<li>Un <b>Nodo de Sensado</b> (ESP8266) que mide temperatura y humedad.</li>
+<li>Un <b>Nodo Actuador</b> (ESP32-C6) que mueve un servomotor según una consigna.</li>
+<li>Un <b>broker MQTT</b> (por ejemplo, una Raspberry Pi) que concentra toda la información y permite la integración con herramientas como Node-RED.</li>
+</ul>
+<p>El objetivo es disponer de un ejemplo completo y didáctico que combine:</p>
+<ul>
+<li>Adquisición de datos.</li>
+<li>Control PI discreto.</li>
+<li>Comunicación IoT (WiFi + MQTT).</li>
+<li>Ejecución en tiempo real con FreeRTOS (en el nodo actuador).</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="arch_sec"></a>
+Arquitectura general</h1>
+<p>A alto nivel, la arquitectura puede describirse así:</p>
+<ul>
+<li><b>Nodo_de_Sensado</b> (ESP8266):<ul>
+<li>Mide <b>temperatura</b> y <b>humedad</b> mediante un sensor DHT11.</li>
+<li>Se conecta a una red WiFi de laboratorio.</li>
+<li>Resuelve dinámicamente la IP del broker (por nombre de host).</li>
+<li>Publica periódicamente las mediciones vía MQTT.</li>
+<li>Utiliza LWT (Last Will and Testament) para informar si está <code>Online</code> o <code>Offline</code>.</li>
+</ul>
+</li>
+<li><b>Nodo_Actuador</b> (ESP32-C6):<ul>
+<li>Implementa un controlador <b>PI</b> discreto diseñado en MATLAB y discretizado por método de <b>Tustin</b>.</li>
+<li>Recibe por MQTT:<ul>
+<li>La consigna de temperatura (SP).</li>
+<li>La temperatura medida (PV).</li>
+<li>Los parámetros de sintonía <code>Kp</code> y <code>Ti</code>.</li>
+</ul>
+</li>
+<li>Calcula una salida lógica (0–100 %) y la convierte a una posición en grados de un servomotor (0–180°).</li>
+<li>Publica su estado (posición del servo y mando lógico) a través de MQTT.</li>
+<li>Ejecuta el lazo de control y las comunicaciones en tareas separadas de FreeRTOS.</li>
+</ul>
+</li>
+<li><b>Broker_MQTT:</b> <ul>
+<li>Centraliza todos los tópicos.</li>
+<li>Permite visualizar y manipular los datos desde Node-RED, dashboards, u otras aplicaciones.</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="topics_sec"></a>
+Tópicos MQTT utilizados</h1>
+<h2 class="doxsection"><a class="anchor" id="sensor_topics"></a>
+Tópicos del Nodo de Sensado (<a class="el" href="group___n_o_d_e___s_e_n_s_o_r.html">Nodo de Sensado</a>)</h2>
+<p>Tópico base:</p><ul>
+<li><code>universidad/piso3/sala_de_profes</code> </li>
+</ul>
+<p>Tópicos derivados:</p><ul>
+<li><code>universidad/piso3/sala_de_profes/temperatura</code> <ul>
+<li>Publica la temperatura medida (en °C, con 1 decimal).</li>
+</ul>
+</li>
+<li><code>universidad/piso3/sala_de_profes/humedad</code> <ul>
+<li>Publica la humedad relativa (en %, sin decimales).</li>
+</ul>
+</li>
+<li><code>universidad/piso3/sala_de_profes/status</code> <ul>
+<li>Publica el estado del nodo: <code>Online</code>, <code>Offline</code> (LWT) o <code>ErrorSensor</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="actuator_topics"></a>
+Tópicos del Nodo Actuador (NODE_ACTUATOR)</h2>
+<p>Tópicos de suscripción (entradas):</p><ul>
+<li><code>emu/t_sp</code> <ul>
+<li>Consigna de temperatura (SP).</li>
+</ul>
+</li>
+<li><code>emu/t_act</code> <ul>
+<li>Temperatura de proceso (PV).</li>
+</ul>
+</li>
+<li><code>emu/kp_set</code> <ul>
+<li>Valor de <code>Kp</code> para el controlador PI.</li>
+</ul>
+</li>
+<li><code>emu/ti_set</code> <ul>
+<li>Valor de <code>Ti</code> (tiempo integral) para el controlador PI.</li>
+</ul>
+</li>
+</ul>
+<p>Tópicos de publicación (salidas):</p><ul>
+<li><code>emu/servo_pos</code> <ul>
+<li>Posición física del servomotor (grados).</li>
+</ul>
+</li>
+<li><code>emu/u_out</code> <ul>
+<li>Mando lógico del PI (0–100 %).</li>
+</ul>
+</li>
+</ul>
+<p>Todos los mensajes se envían como texto ASCII, lo que facilita la depuración y el trazado de datos desde Node-RED u otras herramientas.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="flow_sec"></a>
+Flujo típico de funcionamiento</h1>
+<ol type="1">
+<li>El <a class="el" href="group___n_o_d_e___s_e_n_s_o_r.html">Nodo de Sensado</a> se conecta a WiFi, resuelve la IP del broker MQTT y comienza a publicar temperatura y humedad cada cierto intervalo.</li>
+<li>El NODE_ACTUATOR se conecta a WiFi y al mismo broker MQTT.</li>
+<li>Desde un PC o una interfaz (por ejemplo Node-RED) se envía:<ul>
+<li>La consigna de temperatura (SP).</li>
+<li>Opcionalmente, la sintonía del PI (<code>Kp</code> y <code>Ti</code>).</li>
+</ul>
+</li>
+<li>El NODE_ACTUATOR:<ul>
+<li>Recibe la SP y la PV.</li>
+<li>Ejecuta el controlador PI discreto.</li>
+<li>Ajusta la posición del servomotor en consecuencia.</li>
+<li>Va publicando su estado (posición y mando).</li>
+</ul>
+</li>
+<li>El sistema completo puede visualizarse y supervisarse desde:<ul>
+<li>Dashboards.</li>
+<li>Gráficos de tendencia.</li>
+<li>Scripts de MATLAB analizando el log del actuador.</li>
+</ul>
+</li>
+</ol>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="nav_sec"></a>
+¿Cómo leer esta documentación?</h1>
+<p>Esta documentación está organizada en varios niveles:</p>
+<ul>
+<li><b>Módulos</b> (sección "Modules"):<ul>
+<li><a class="el" href="group___n_o_d_e___s_e_n_s_o_r.html">Nodo de Sensado</a> : descripción del nodo de sensado.</li>
+<li>NODE_ACTUATOR : descripción del nodo actuador.</li>
+<li>Dentro de NODE_ACTUATOR se encuentran, a su vez:<ul>
+<li>El módulo de Control del Proceso y Actuador (PI + servo).</li>
+<li>El módulo de Comunicación WiFi/MQTT.</li>
+<li>El módulo de Manejo de Tareas FreeRTOS.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><b>Archivos</b> (sección "Files"):<ul>
+<li>Permite ver cada archivo fuente (por ejemplo <code>main.cpp</code>) con una lista de funciones y variables documentadas.</li>
+</ul>
+</li>
+<li><b>Funciones</b> y Variables:<ul>
+<li>Cada función está documentada con su propósito, parámetros y comportamiento.</li>
+<li>Las variables globales más importantes se describen para entender su rol dentro del lazo de control o de las comunicaciones.</li>
+</ul>
+</li>
+</ul>
+<p>En resumen, si el lector quiere:</p>
+<ul>
+<li>Entender el sistema a alto nivel → revisar esta página principal.</li>
+<li>Ver qué hace cada nodo → entrar a <a class="el" href="group___n_o_d_e___s_e_n_s_o_r.html">Nodo de Sensado</a> y NODE_ACTUATOR en la sección "Modules".</li>
+<li>Ir a detalle de implementación → navegar a "Files" y abrir los fuentes. </li>
+</ul>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->

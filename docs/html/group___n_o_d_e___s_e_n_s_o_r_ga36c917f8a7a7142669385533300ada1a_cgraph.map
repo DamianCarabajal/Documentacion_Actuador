@@ -1,0 +1,5 @@
+<map id="reconnect_mqtt" name="reconnect_mqtt">
+<area shape="rect" id="Node000001" title="Establece o restablece la conexión MQTT utilizando LWT." alt="" coords="5,5,117,32"/>
+<area shape="rect" id="Node000002" href="$group___n_o_d_e___s_e_n_s_o_r.html#gaee63e84c606cfaefce454689113c636c" title="Cliente MQTT basado en PubSubClient." alt="" coords="165,5,217,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,16,152,18,146,19,117,21"/>
+</map>

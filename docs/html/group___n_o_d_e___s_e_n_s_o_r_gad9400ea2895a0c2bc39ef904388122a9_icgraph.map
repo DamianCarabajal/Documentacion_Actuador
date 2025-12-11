@@ -1,0 +1,5 @@
+<map id="resolver_ip_servidor" name="resolver_ip_servidor">
+<area shape="rect" id="Node000001" title="Resuelve la IP del servidor MQTT a partir del nombre de host." alt="" coords="107,5,244,32"/>
+<area shape="rect" id="Node000002" href="$group___n_o_d_e___s_e_n_s_o_r.html#ga4fc01d736fe50cf5b977f755b675f11d" title="Función de inicialización del nodo de sensado." alt="" coords="5,5,59,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,19,59,21,59,16,93,18"/>
+</map>

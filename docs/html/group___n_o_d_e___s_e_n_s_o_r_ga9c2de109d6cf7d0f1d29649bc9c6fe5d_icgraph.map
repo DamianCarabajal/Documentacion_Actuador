@@ -1,0 +1,7 @@
+<map id="dht" name="dht">
+<area shape="rect" id="Node000001" title="Objeto de sensor DHT (temperatura y humedad)." alt="" coords="107,31,146,57"/>
+<area shape="rect" id="Node000002" href="$group___n_o_d_e___s_e_n_s_o_r.html#gafe461d27b9c48d5921c00d521181f12f" title="Bucle principal del nodo de sensado." alt="" coords="9,5,55,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,36,55,27,55,22,94,33"/>
+<area shape="rect" id="Node000003" href="$group___n_o_d_e___s_e_n_s_o_r.html#ga4fc01d736fe50cf5b977f755b675f11d" title="Función de inicialización del nodo de sensado." alt="" coords="5,56,59,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="89,54,60,65,58,60,94,52"/>
+</map>

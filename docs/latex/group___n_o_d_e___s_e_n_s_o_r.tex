@@ -1,0 +1,443 @@
+\doxysection{Nodo de Sensado }
+\hypertarget{group___n_o_d_e___s_e_n_s_o_r}{}\label{group___n_o_d_e___s_e_n_s_o_r}\index{Nodo de Sensado@{Nodo de Sensado}}
+
+
+Nodo IoT encargado de la adquisición de temperatura y humedad.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Pub\+Sub\+Client \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaee63e84c606cfaefce454689113c636c}{client}} (\mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gabd77e757e4b3bb6f1e4b42b21ea9e040}{esp\+Client}})
+\begin{DoxyCompactList}\small\item\em Cliente MQTT basado en Pub\+Sub\+Client. \end{DoxyCompactList}\item 
+DHT \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga9c2de109d6cf7d0f1d29649bc9c6fe5d}{dht}} (\mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf46665ccd075f737a72a755a07dce65e}{DHT\+\_\+\+PIN}}, \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gac49f486474bc85087bad0af42fe33298}{DHT\+\_\+\+TIPO}})
+\begin{DoxyCompactList}\small\item\em Objeto de sensor DHT (temperatura y humedad). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gae5b88d967e3185d98053cf055c8b4f1f}{setup\+\_\+wifi}} ()
+\begin{DoxyCompactList}\small\item\em Establece la conexión con la red Wi\+Fi configurada. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gad9400ea2895a0c2bc39ef904388122a9}{resolver\+\_\+ip\+\_\+servidor}} ()
+\begin{DoxyCompactList}\small\item\em Resuelve la IP del servidor MQTT a partir del nombre de host. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a}{reconnect\+\_\+mqtt}} ()
+\begin{DoxyCompactList}\small\item\em Establece o restablece la conexión MQTT utilizando LWT. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Función de inicialización del nodo de sensado. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gafe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Bucle principal del nodo de sensado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Wi\+Fi\+Client \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gabd77e757e4b3bb6f1e4b42b21ea9e040}{esp\+Client}}
+\begin{DoxyCompactList}\small\item\em Cliente TCP/\+IP para la pila Wi\+Fi del ESP8266. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf6361f5c83f781b551b479460f7cedd5}{ultima\+Publicacion}} = 0
+\begin{DoxyCompactList}\small\item\em Marca de tiempo (millis) de la última publicación realizada. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf20f1126833e7ba6f8389ab6cc4d4118}{msg\+Buffer}} \mbox{[}10\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer temporal para formatear las mediciones antes de publicarlas. \end{DoxyCompactList}\item 
+IPAddress \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga1a1b540e6016df40e712b0cf0c9d559c}{mqtt\+\_\+server\+\_\+ip}}
+\begin{DoxyCompactList}\small\item\em Dirección IP resuelta del servidor MQTT (a partir de \doxylink{group___n_o_d_e___s_e_n_s_o_r_gae3a5887363584611596474dc835b055b}{mqtt\+\_\+host}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Configuración Wi\+Fi}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga587ba0cb07f02913598610049a3bbb79}{ssid}} = "{}Alumnos 2G"{}
+\begin{DoxyCompactList}\small\item\em SSID de la red Wi\+Fi utilizada por el nodo de sensado. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaa4a2ebcb494493f648ae1e6975672575}{password}} = "{}"{}
+\begin{DoxyCompactList}\small\item\em Contraseña de la red Wi\+Fi (vacía en este entorno de laboratorio). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Configuración MQTT}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gae3a5887363584611596474dc835b055b}{mqtt\+\_\+host}} = "{}Fe\+Da\+Mi.\+local"{}
+\begin{DoxyCompactList}\small\item\em Nombre de host del broker MQTT (resuelto por DNS local). \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gae4f28c882f3fb17a47d7bfea3dd5cc02}{mqtt\+\_\+port}} = 1883
+\begin{DoxyCompactList}\small\item\em Puerto TCP del broker MQTT. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf7c6bd130c027a155eb2cc3e9b6d245f}{mqtt\+\_\+client\+\_\+id}} = "{}ESP01\+S\+\_\+\+Sensor\+\_\+\+Temp\+\_\+\+Sala-\/de-\/Profes"{}
+\begin{DoxyCompactList}\small\item\em Identificador de cliente MQTT para este nodo (debe ser único). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Configuración de tópicos MQTT}
+Tópicos utilizados por el nodo para publicar mediciones y estado. \begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} = "{}universidad/piso3/sala\+\_\+de\+\_\+profes"{}
+\begin{DoxyCompactList}\small\item\em Tópico base asociado a la sala de profesores. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga9bc48b68d5ab2f139de7f8d452a4e419}{TOPIC\+\_\+\+TEMPERATURA}} = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/temperatura"{}
+\begin{DoxyCompactList}\small\item\em Tópico donde se publica la temperatura medida (°C). \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga629746500ec67f96f9f16d8c96ee8b75}{TOPIC\+\_\+\+HUMEDAD}} = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/humedad"{}
+\begin{DoxyCompactList}\small\item\em Tópico donde se publica la humedad medida (HR). \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga5d35cb5b11486bad5bf2e6bb981de5aa}{TOPIC\+\_\+\+STATUS}} = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/status"{}
+\begin{DoxyCompactList}\small\item\em Tópico donde se publica el estado del nodo ("{}\+Online"{}, "{}\+Offline"{}, etc.). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Configuración del sensor DHT}
+\begin{DoxyCompactItemize}
+\item 
+const int \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf46665ccd075f737a72a755a07dce65e}{DHT\+\_\+\+PIN}} = 2
+\begin{DoxyCompactList}\small\item\em Pin GPIO utilizado para el sensor DHT11. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gac49f486474bc85087bad0af42fe33298}{DHT\+\_\+\+TIPO}}~DHT11
+\begin{DoxyCompactList}\small\item\em Tipo de sensor DHT utilizado (DHT11 en este caso). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Configuración de tiempos}
+\begin{DoxyCompactItemize}
+\item 
+const long \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf7d32d80c733843e458939ca53abc14e}{intervalo\+\_\+publicacion}} = 60000
+\begin{DoxyCompactList}\small\item\em Intervalo entre publicaciones MQTT, en milisegundos. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Nodo IoT encargado de la adquisición de temperatura y humedad. 
+
+Este nodo\+:
+\begin{DoxyItemize}
+\item Se conecta a una red Wi\+Fi de laboratorio.
+\item Resuelve dinámicamente la IP del broker MQTT (por nombre de host).
+\item Publica periódicamente temperatura y humedad en tópicos MQTT específicos.
+\item Utiliza LWT (Last Will and Testament) para indicar automáticamente el estado "{}\+Offline"{} cuando se pierde la conexión con el broker. 
+\end{DoxyItemize}
+
+\label{doc-define-members}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gac49f486474bc85087bad0af42fe33298}\index{Nodo de Sensado@{Nodo de Sensado}!DHT\_TIPO@{DHT\_TIPO}}
+\index{DHT\_TIPO@{DHT\_TIPO}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{DHT\_TIPO}{DHT\_TIPO}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gac49f486474bc85087bad0af42fe33298} 
+\#define DHT\+\_\+\+TIPO~DHT11}
+
+
+
+Tipo de sensor DHT utilizado (DHT11 en este caso). 
+
+
+
+\label{doc-func-members}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaee63e84c606cfaefce454689113c636c}\index{Nodo de Sensado@{Nodo de Sensado}!client@{client}}
+\index{client@{client}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{client()}{client()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaee63e84c606cfaefce454689113c636c} 
+Pub\+Sub\+Client client (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gabd77e757e4b3bb6f1e4b42b21ea9e040}{esp\+Client}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Cliente MQTT basado en Pub\+Sub\+Client. 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{group___n_o_d_e___s_e_n_s_o_r_gaee63e84c606cfaefce454689113c636c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga9c2de109d6cf7d0f1d29649bc9c6fe5d}\index{Nodo de Sensado@{Nodo de Sensado}!dht@{dht}}
+\index{dht@{dht}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{dht()}{dht()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga9c2de109d6cf7d0f1d29649bc9c6fe5d} 
+DHT dht (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gaf46665ccd075f737a72a755a07dce65e}{DHT\+\_\+\+PIN}}}]{}{, }\item[{\mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_gac49f486474bc85087bad0af42fe33298}{DHT\+\_\+\+TIPO}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Objeto de sensor DHT (temperatura y humedad). 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{group___n_o_d_e___s_e_n_s_o_r_ga9c2de109d6cf7d0f1d29649bc9c6fe5d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gafe461d27b9c48d5921c00d521181f12f}\index{Nodo de Sensado@{Nodo de Sensado}!loop@{loop}}
+\index{loop@{loop}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gafe461d27b9c48d5921c00d521181f12f} 
+void loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Bucle principal del nodo de sensado. 
+
+En cada iteración\+:
+\begin{DoxyItemize}
+\item Verifica la conexión MQTT y la restablece si es necesario.
+\item Llama a Pub\+Sub\+Client\+::loop() para mantener viva la conexión.
+\item Cada \doxylink{group___n_o_d_e___s_e_n_s_o_r_gaf7d32d80c733843e458939ca53abc14e}{intervalo\+\_\+publicacion} milisegundos\+:
+\begin{DoxyItemize}
+\item Lee temperatura y humedad del sensor DHT.
+\item Verifica lecturas válidas.
+\item Publica temperatura en \doxylink{group___n_o_d_e___s_e_n_s_o_r_ga9bc48b68d5ab2f139de7f8d452a4e419}{TOPIC\+\_\+\+TEMPERATURA} (con 1 decimal).
+\item Publica humedad en \doxylink{group___n_o_d_e___s_e_n_s_o_r_ga629746500ec67f96f9f16d8c96ee8b75}{TOPIC\+\_\+\+HUMEDAD} (entero).
+\item En caso de error de lectura, publica "{}\+Error\+Sensor"{} en \doxylink{group___n_o_d_e___s_e_n_s_o_r_ga5d35cb5b11486bad5bf2e6bb981de5aa}{TOPIC\+\_\+\+STATUS}.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Todos los mensajes MQTT se envían con la marca {\ttfamily retained} = true para que el último valor quede disponible al suscribirse. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=309pt]{group___n_o_d_e___s_e_n_s_o_r_gafe461d27b9c48d5921c00d521181f12f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a}\index{Nodo de Sensado@{Nodo de Sensado}!reconnect\_mqtt@{reconnect\_mqtt}}
+\index{reconnect\_mqtt@{reconnect\_mqtt}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{reconnect\_mqtt()}{reconnect\_mqtt()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a} 
+void reconnect\+\_\+mqtt (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Establece o restablece la conexión MQTT utilizando LWT. 
+
+La función intenta conectarse al broker MQTT en un bucle hasta lograrlo. Se configura un Last Will and Testament (LWT) sobre \doxylink{group___n_o_d_e___s_e_n_s_o_r_ga5d35cb5b11486bad5bf2e6bb981de5aa}{TOPIC\+\_\+\+STATUS} con el mensaje "{}\+Offline"{} y\+:
+\begin{DoxyItemize}
+\item QoS = 1
+\item Retain = true
+\end{DoxyItemize}
+
+Una vez conectados, el nodo publica inmediatamente el estado "{}\+Online"{} en el mismo tópico con retain, sobrescribiendo el mensaje "{}\+Offline"{}. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=239pt]{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gad9400ea2895a0c2bc39ef904388122a9}\index{Nodo de Sensado@{Nodo de Sensado}!resolver\_ip\_servidor@{resolver\_ip\_servidor}}
+\index{resolver\_ip\_servidor@{resolver\_ip\_servidor}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{resolver\_ip\_servidor()}{resolver\_ip\_servidor()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gad9400ea2895a0c2bc39ef904388122a9} 
+void resolver\+\_\+ip\+\_\+servidor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Resuelve la IP del servidor MQTT a partir del nombre de host. 
+
+Se llama a Wi\+Fi.\+host\+By\+Name() en un bucle hasta obtener una IP válida. Una vez resuelta la dirección, se configura el cliente MQTT con Pub\+Sub\+Client\+::set\+Server().
+
+\begin{DoxyNote}{Note}
+Esta función bloquea mientras no se pueda resolver el host. 
+\end{DoxyNote}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{group___n_o_d_e___s_e_n_s_o_r_gad9400ea2895a0c2bc39ef904388122a9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{group___n_o_d_e___s_e_n_s_o_r_gad9400ea2895a0c2bc39ef904388122a9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga4fc01d736fe50cf5b977f755b675f11d}\index{Nodo de Sensado@{Nodo de Sensado}!setup@{setup}}
+\index{setup@{setup}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga4fc01d736fe50cf5b977f755b675f11d} 
+void setup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Función de inicialización del nodo de sensado. 
+
+Realiza\+:
+\begin{DoxyItemize}
+\item Inicialización del puerto serie.
+\item Inicialización del sensor DHT.
+\item Conexión a la red Wi\+Fi.
+\item Resolución de la IP del servidor MQTT.
+\end{DoxyItemize}
+
+La conexión MQTT se gestiona posteriormente en \doxylink{_actuador_8ino_afe461d27b9c48d5921c00d521181f12f}{loop()} mediante \doxylink{group___n_o_d_e___s_e_n_s_o_r_ga36c917f8a7a7142669385533300ada1a}{reconnect\+\_\+mqtt()}. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{group___n_o_d_e___s_e_n_s_o_r_ga4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gae5b88d967e3185d98053cf055c8b4f1f}\index{Nodo de Sensado@{Nodo de Sensado}!setup\_wifi@{setup\_wifi}}
+\index{setup\_wifi@{setup\_wifi}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{setup\_wifi()}{setup\_wifi()}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gae5b88d967e3185d98053cf055c8b4f1f} 
+void setup\+\_\+wifi (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Establece la conexión con la red Wi\+Fi configurada. 
+
+La función\+:
+\begin{DoxyItemize}
+\item Inicia la conexión Wi\+Fi mediante Wi\+Fi.\+begin().
+\item Espera hasta obtener el estado {\ttfamily WL\+\_\+\+CONNECTED}.
+\item Muestra por puerto serie la IP asignada al ESP8266. 
+\end{DoxyItemize}Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{group___n_o_d_e___s_e_n_s_o_r_gae5b88d967e3185d98053cf055c8b4f1f_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaf46665ccd075f737a72a755a07dce65e}\index{Nodo de Sensado@{Nodo de Sensado}!DHT\_PIN@{DHT\_PIN}}
+\index{DHT\_PIN@{DHT\_PIN}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{DHT\_PIN}{DHT\_PIN}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaf46665ccd075f737a72a755a07dce65e} 
+const int DHT\+\_\+\+PIN = 2}
+
+
+
+Pin GPIO utilizado para el sensor DHT11. 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gabd77e757e4b3bb6f1e4b42b21ea9e040}\index{Nodo de Sensado@{Nodo de Sensado}!espClient@{espClient}}
+\index{espClient@{espClient}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{espClient}{espClient}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gabd77e757e4b3bb6f1e4b42b21ea9e040} 
+Wi\+Fi\+Client esp\+Client}
+
+
+
+Cliente TCP/\+IP para la pila Wi\+Fi del ESP8266. 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaf7d32d80c733843e458939ca53abc14e}\index{Nodo de Sensado@{Nodo de Sensado}!intervalo\_publicacion@{intervalo\_publicacion}}
+\index{intervalo\_publicacion@{intervalo\_publicacion}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{intervalo\_publicacion}{intervalo\_publicacion}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaf7d32d80c733843e458939ca53abc14e} 
+const long intervalo\+\_\+publicacion = 60000}
+
+
+
+Intervalo entre publicaciones MQTT, en milisegundos. 
+
+En este firmware se utiliza un periodo de 60 s (1 minuto) entre mediciones y publicaciones. \Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaf7c6bd130c027a155eb2cc3e9b6d245f}\index{Nodo de Sensado@{Nodo de Sensado}!mqtt\_client\_id@{mqtt\_client\_id}}
+\index{mqtt\_client\_id@{mqtt\_client\_id}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{mqtt\_client\_id}{mqtt\_client\_id}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaf7c6bd130c027a155eb2cc3e9b6d245f} 
+const char\texorpdfstring{$\ast$}{*} mqtt\+\_\+client\+\_\+id = "{}ESP01\+S\+\_\+\+Sensor\+\_\+\+Temp\+\_\+\+Sala-\/de-\/Profes"{}}
+
+
+
+Identificador de cliente MQTT para este nodo (debe ser único). 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gae3a5887363584611596474dc835b055b}\index{Nodo de Sensado@{Nodo de Sensado}!mqtt\_host@{mqtt\_host}}
+\index{mqtt\_host@{mqtt\_host}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{mqtt\_host}{mqtt\_host}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gae3a5887363584611596474dc835b055b} 
+const char\texorpdfstring{$\ast$}{*} mqtt\+\_\+host = "{}Fe\+Da\+Mi.\+local"{}}
+
+
+
+Nombre de host del broker MQTT (resuelto por DNS local). 
+
+Se utiliza Wi\+Fi.\+host\+By\+Name() para resolver este nombre a una dirección IP antes de configurar el cliente MQTT. \Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gae4f28c882f3fb17a47d7bfea3dd5cc02}\index{Nodo de Sensado@{Nodo de Sensado}!mqtt\_port@{mqtt\_port}}
+\index{mqtt\_port@{mqtt\_port}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{mqtt\_port}{mqtt\_port}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gae4f28c882f3fb17a47d7bfea3dd5cc02} 
+const int mqtt\+\_\+port = 1883}
+
+
+
+Puerto TCP del broker MQTT. 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga1a1b540e6016df40e712b0cf0c9d559c}\index{Nodo de Sensado@{Nodo de Sensado}!mqtt\_server\_ip@{mqtt\_server\_ip}}
+\index{mqtt\_server\_ip@{mqtt\_server\_ip}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{mqtt\_server\_ip}{mqtt\_server\_ip}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga1a1b540e6016df40e712b0cf0c9d559c} 
+IPAddress mqtt\+\_\+server\+\_\+ip}
+
+
+
+Dirección IP resuelta del servidor MQTT (a partir de \doxylink{group___n_o_d_e___s_e_n_s_o_r_gae3a5887363584611596474dc835b055b}{mqtt\+\_\+host}). 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaf20f1126833e7ba6f8389ab6cc4d4118}\index{Nodo de Sensado@{Nodo de Sensado}!msgBuffer@{msgBuffer}}
+\index{msgBuffer@{msgBuffer}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{msgBuffer}{msgBuffer}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaf20f1126833e7ba6f8389ab6cc4d4118} 
+char msg\+Buffer\mbox{[}10\mbox{]}}
+
+
+
+Buffer temporal para formatear las mediciones antes de publicarlas. 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaa4a2ebcb494493f648ae1e6975672575}\index{Nodo de Sensado@{Nodo de Sensado}!password@{password}}
+\index{password@{password}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaa4a2ebcb494493f648ae1e6975672575} 
+const char\texorpdfstring{$\ast$}{*} password = "{}"{}}
+
+
+
+Contraseña de la red Wi\+Fi (vacía en este entorno de laboratorio). 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga587ba0cb07f02913598610049a3bbb79}\index{Nodo de Sensado@{Nodo de Sensado}!ssid@{ssid}}
+\index{ssid@{ssid}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{ssid}{ssid}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga587ba0cb07f02913598610049a3bbb79} 
+const char\texorpdfstring{$\ast$}{*} ssid = "{}Alumnos 2G"{}}
+
+
+
+SSID de la red Wi\+Fi utilizada por el nodo de sensado. 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga629746500ec67f96f9f16d8c96ee8b75}\index{Nodo de Sensado@{Nodo de Sensado}!TOPIC\_HUMEDAD@{TOPIC\_HUMEDAD}}
+\index{TOPIC\_HUMEDAD@{TOPIC\_HUMEDAD}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{TOPIC\_HUMEDAD}{TOPIC\_HUMEDAD}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga629746500ec67f96f9f16d8c96ee8b75} 
+String TOPIC\+\_\+\+HUMEDAD = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/humedad"{}}
+
+
+
+Tópico donde se publica la humedad medida (HR). 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga5d35cb5b11486bad5bf2e6bb981de5aa}\index{Nodo de Sensado@{Nodo de Sensado}!TOPIC\_STATUS@{TOPIC\_STATUS}}
+\index{TOPIC\_STATUS@{TOPIC\_STATUS}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{TOPIC\_STATUS}{TOPIC\_STATUS}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga5d35cb5b11486bad5bf2e6bb981de5aa} 
+String TOPIC\+\_\+\+STATUS = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/status"{}}
+
+
+
+Tópico donde se publica el estado del nodo ("{}\+Online"{}, "{}\+Offline"{}, etc.). 
+
+Se utiliza tanto para el Last Will and Testament (LWT) como para indicar estados de error del sensor. \Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga9bc48b68d5ab2f139de7f8d452a4e419}\index{Nodo de Sensado@{Nodo de Sensado}!TOPIC\_TEMPERATURA@{TOPIC\_TEMPERATURA}}
+\index{TOPIC\_TEMPERATURA@{TOPIC\_TEMPERATURA}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{TOPIC\_TEMPERATURA}{TOPIC\_TEMPERATURA}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga9bc48b68d5ab2f139de7f8d452a4e419} 
+String TOPIC\+\_\+\+TEMPERATURA = \mbox{\hyperlink{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}{TOPICO\+\_\+\+BASE}} + "{}/temperatura"{}}
+
+
+
+Tópico donde se publica la temperatura medida (°C). 
+
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3}\index{Nodo de Sensado@{Nodo de Sensado}!TOPICO\_BASE@{TOPICO\_BASE}}
+\index{TOPICO\_BASE@{TOPICO\_BASE}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{TOPICO\_BASE}{TOPICO\_BASE}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_ga78745c1c369eac01a64206c5aaad1cf3} 
+String TOPICO\+\_\+\+BASE = "{}universidad/piso3/sala\+\_\+de\+\_\+profes"{}}
+
+
+
+Tópico base asociado a la sala de profesores. 
+
+\begin{DoxyNote}{Note}
+Es sensible a mayúsculas/minúsculas, debe coincidir con la configuración en Node-\/\+RED. 
+\end{DoxyNote}
+\Hypertarget{group___n_o_d_e___s_e_n_s_o_r_gaf6361f5c83f781b551b479460f7cedd5}\index{Nodo de Sensado@{Nodo de Sensado}!ultimaPublicacion@{ultimaPublicacion}}
+\index{ultimaPublicacion@{ultimaPublicacion}!Nodo de Sensado@{Nodo de Sensado}}
+\doxysubsubsection{\texorpdfstring{ultimaPublicacion}{ultimaPublicacion}}
+{\footnotesize\ttfamily \label{group___n_o_d_e___s_e_n_s_o_r_gaf6361f5c83f781b551b479460f7cedd5} 
+long ultima\+Publicacion = 0}
+
+
+
+Marca de tiempo (millis) de la última publicación realizada. 
+

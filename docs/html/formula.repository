@@ -1,0 +1,6 @@
+\_form#0:\[   u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\]
+\_form#1:\[  u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\]
+\_form#2:$ e[k] = SP - PV $
+\_form#3:$ u[k] $

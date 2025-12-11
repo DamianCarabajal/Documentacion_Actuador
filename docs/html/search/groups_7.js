@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wifi_20mqtt_0',['Comunicación WiFi/MQTT',['../group___c_o_m_m_s___m_q_t_t.html',1,'']]]
+  ['sensado_0',['Nodo de Sensado',['../group___n_o_d_e___s_e_n_s_o_r.html',1,'']]]
 ];

@@ -78,16 +78,14 @@ Luego\+:
 \item Se satura $ u[k] $ al rango 0..100 \%.
 \item Se actualizan \doxylink{group___c_o_n_t_r_o_l_ga8fa1c5428ed7af4a44b3945e878763dc}{error\+\_\+k\+\_\+1} y \doxylink{group___c_o_n_t_r_o_l_gaaa8cafedd34c2b7032c69588d9e8d3d3}{u\+\_\+logic}.
 \item Se convierte $ u[k] $ a grados de servo y se llama a \doxylink{group___c_o_n_t_r_o_l_gacea260ba8426e8c1691a1c2e0a1061c7}{set\+Servo\+Degrees()}. 
-\end{DoxyItemize}Here is the call graph for this function\+:
-\nopagebreak
+\end{DoxyItemize}Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=279pt]{group___c_o_n_t_r_o_l_gaa9efa0560459f02fc6aba6ef5902edf6_cgraph}
 \end{center}
 \end{figure}
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -118,8 +116,7 @@ Se llama\+:
 \item Cuando se actualizan \doxylink{group___c_o_n_t_r_o_l_gaa541ed83aa82432ce5888ad8c00eb7b5}{Kp} o \doxylink{group___c_o_n_t_r_o_l_ga328bc0b09952c26dce3e99cc182a3006}{Ti} vía MQTT. 
 \end{DoxyItemize}
 \end{DoxyNote}
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -144,8 +141,7 @@ Escala el mando lógico (0..100 \%) al rango de grados del servo.
 \begin{DoxyReturn}{Returns}
 Ángulo en grados dentro del rango \mbox{[}SERVO\+\_\+\+DEG\+\_\+\+MIN, SERVO\+\_\+\+DEG\+\_\+\+MAX\mbox{]}. 
 \end{DoxyReturn}
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -172,8 +168,7 @@ La función\+:
 \item Satura {\ttfamily deg} al rango \mbox{[}SERVO\+\_\+\+DEG\+\_\+\+MIN, SERVO\+\_\+\+DEG\+\_\+\+MAX\mbox{]}.
 \item Actualiza la variable global \doxylink{group___c_o_n_t_r_o_l_gae830daba1919e7ebcb88d3eeb42ddce0}{pos\+\_\+deg}.
 \item Llama a servo.\+write() con el ángulo invertido (180 -\/ deg) según el montaje físico. 
-\end{DoxyItemize}Here is the caller graph for this function\+:
-\nopagebreak
+\end{DoxyItemize}Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

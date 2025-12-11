@@ -1,0 +1,175 @@
+\chapter{Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador }
+\hypertarget{index}{}\label{index}\index{Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador@{Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador}}
+\hypertarget{index_intro_sec}{}\doxysection{\texorpdfstring{¿\+Qué es este sistema?}{¿\+Qué es este sistema?}}\label{index_intro_sec}
+Este proyecto implementa un sistema IoT sencillo para el control de temperatura en una sala, utilizando dos nodos físicos y un broker MQTT\+:
+
+
+\begin{DoxyItemize}
+\item Un {\bfseries{Nodo de Sensado}} (ESP8266) que mide temperatura y humedad.
+\item Un {\bfseries{Nodo Actuador}} (ESP32-\/\+C6) que mueve un servomotor según una consigna.
+\item Un {\bfseries{broker MQTT}} (por ejemplo, una Raspberry Pi) que concentra toda la información y permite la integración con herramientas como Node-\/\+RED.
+\end{DoxyItemize}
+
+El objetivo es disponer de un ejemplo completo y didáctico que combine\+:
+
+
+\begin{DoxyItemize}
+\item Adquisición de datos.
+\item Control PI discreto.
+\item Comunicación IoT (Wi\+Fi + MQTT).
+\item Ejecución en tiempo real con Free\+RTOS (en el nodo actuador).
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_arch_sec}{}\doxysection{\texorpdfstring{Arquitectura general}{Arquitectura general}}\label{index_arch_sec}
+A alto nivel, la arquitectura puede describirse así\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Nodo\+\_\+de\+\_\+\+Sensado}} (ESP8266)\+:
+\begin{DoxyItemize}
+\item Mide {\bfseries{temperatura}} y {\bfseries{humedad}} mediante un sensor DHT11.
+\item Se conecta a una red Wi\+Fi de laboratorio.
+\item Resuelve dinámicamente la IP del broker (por nombre de host).
+\item Publica periódicamente las mediciones vía MQTT.
+\item Utiliza LWT (Last Will and Testament) para informar si está {\ttfamily Online} o {\ttfamily Offline}.
+\end{DoxyItemize}
+\item {\bfseries{Nodo\+\_\+\+Actuador}} (ESP32-\/\+C6)\+:
+\begin{DoxyItemize}
+\item Implementa un controlador {\bfseries{PI}} discreto diseñado en MATLAB y discretizado por método de {\bfseries{Tustin}}.
+\item Recibe por MQTT\+:
+\begin{DoxyItemize}
+\item La consigna de temperatura (SP).
+\item La temperatura medida (PV).
+\item Los parámetros de sintonía {\ttfamily Kp} y {\ttfamily Ti}.
+\end{DoxyItemize}
+\item Calcula una salida lógica (0–100 \%) y la convierte a una posición en grados de un servomotor (0–180°).
+\item Publica su estado (posición del servo y mando lógico) a través de MQTT.
+\item Ejecuta el lazo de control y las comunicaciones en tareas separadas de Free\+RTOS.
+\end{DoxyItemize}
+\item {\bfseries{Broker\+\_\+\+MQTT\+:}} 
+\begin{DoxyItemize}
+\item Centraliza todos los tópicos.
+\item Permite visualizar y manipular los datos desde Node-\/\+RED, dashboards, u otras aplicaciones.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_topics_sec}{}\doxysection{\texorpdfstring{Tópicos MQTT utilizados}{Tópicos MQTT utilizados}}\label{index_topics_sec}
+\hypertarget{index_sensor_topics}{}\doxysubsection{\texorpdfstring{Tópicos del Nodo de Sensado (\protect\doxylink{group___n_o_d_e___s_e_n_s_o_r}{Nodo de Sensado})}{Tópicos del Nodo de Sensado ({Nodo de Sensado})}}\label{index_sensor_topics}
+Tópico base\+:
+\begin{DoxyItemize}
+\item {\ttfamily universidad/piso3/sala\+\_\+de\+\_\+profes} 
+\end{DoxyItemize}
+
+Tópicos derivados\+:
+\begin{DoxyItemize}
+\item {\ttfamily universidad/piso3/sala\+\_\+de\+\_\+profes/temperatura} 
+\begin{DoxyItemize}
+\item Publica la temperatura medida (en °C, con 1 decimal).
+\end{DoxyItemize}
+\item {\ttfamily universidad/piso3/sala\+\_\+de\+\_\+profes/humedad} 
+\begin{DoxyItemize}
+\item Publica la humedad relativa (en \%, sin decimales).
+\end{DoxyItemize}
+\item {\ttfamily universidad/piso3/sala\+\_\+de\+\_\+profes/status} 
+\begin{DoxyItemize}
+\item Publica el estado del nodo\+: {\ttfamily Online}, {\ttfamily Offline} (LWT) o {\ttfamily Error\+Sensor}.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_actuator_topics}{}\doxysubsection{\texorpdfstring{Tópicos del Nodo Actuador (NODE\+\_\+\+ACTUATOR)}{Tópicos del Nodo Actuador (NODE\+\_\+\+ACTUATOR)}}\label{index_actuator_topics}
+Tópicos de suscripción (entradas)\+:
+\begin{DoxyItemize}
+\item {\ttfamily emu/t\+\_\+sp} 
+\begin{DoxyItemize}
+\item Consigna de temperatura (SP).
+\end{DoxyItemize}
+\item {\ttfamily emu/t\+\_\+act} 
+\begin{DoxyItemize}
+\item Temperatura de proceso (PV).
+\end{DoxyItemize}
+\item {\ttfamily emu/kp\+\_\+set} 
+\begin{DoxyItemize}
+\item Valor de {\ttfamily Kp} para el controlador PI.
+\end{DoxyItemize}
+\item {\ttfamily emu/ti\+\_\+set} 
+\begin{DoxyItemize}
+\item Valor de {\ttfamily Ti} (tiempo integral) para el controlador PI.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Tópicos de publicación (salidas)\+:
+\begin{DoxyItemize}
+\item {\ttfamily emu/servo\+\_\+pos} 
+\begin{DoxyItemize}
+\item Posición física del servomotor (grados).
+\end{DoxyItemize}
+\item {\ttfamily emu/u\+\_\+out} 
+\begin{DoxyItemize}
+\item Mando lógico del PI (0–100 \%).
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Todos los mensajes se envían como texto ASCII, lo que facilita la depuración y el trazado de datos desde Node-\/\+RED u otras herramientas.
+
+\DoxyHorRuler{0}
+\hypertarget{index_flow_sec}{}\doxysection{\texorpdfstring{Flujo típico de funcionamiento}{Flujo típico de funcionamiento}}\label{index_flow_sec}
+
+\begin{DoxyEnumerate}
+\item El \doxylink{group___n_o_d_e___s_e_n_s_o_r}{Nodo de Sensado} se conecta a Wi\+Fi, resuelve la IP del broker MQTT y comienza a publicar temperatura y humedad cada cierto intervalo.
+\item El NODE\+\_\+\+ACTUATOR se conecta a Wi\+Fi y al mismo broker MQTT.
+\item Desde un PC o una interfaz (por ejemplo Node-\/\+RED) se envía\+:
+\begin{DoxyItemize}
+\item La consigna de temperatura (SP).
+\item Opcionalmente, la sintonía del PI ({\ttfamily Kp} y {\ttfamily Ti}).
+\end{DoxyItemize}
+\item El NODE\+\_\+\+ACTUATOR\+:
+\begin{DoxyItemize}
+\item Recibe la SP y la PV.
+\item Ejecuta el controlador PI discreto.
+\item Ajusta la posición del servomotor en consecuencia.
+\item Va publicando su estado (posición y mando).
+\end{DoxyItemize}
+\item El sistema completo puede visualizarse y supervisarse desde\+:
+\begin{DoxyItemize}
+\item Dashboards.
+\item Gráficos de tendencia.
+\item Scripts de MATLAB analizando el log del actuador.
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{index_nav_sec}{}\doxysection{\texorpdfstring{¿\+Cómo leer esta documentación?}{¿\+Cómo leer esta documentación?}}\label{index_nav_sec}
+Esta documentación está organizada en varios niveles\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Módulos}} (sección "{}\+Modules"{})\+:
+\begin{DoxyItemize}
+\item \doxylink{group___n_o_d_e___s_e_n_s_o_r}{Nodo de Sensado} \+: descripción del nodo de sensado.
+\item NODE\+\_\+\+ACTUATOR \+: descripción del nodo actuador.
+\item Dentro de NODE\+\_\+\+ACTUATOR se encuentran, a su vez\+:
+\begin{DoxyItemize}
+\item El módulo de Control del Proceso y Actuador (PI + servo).
+\item El módulo de Comunicación Wi\+Fi/\+MQTT.
+\item El módulo de Manejo de Tareas Free\+RTOS.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item {\bfseries{Archivos}} (sección "{}\+Files"{})\+:
+\begin{DoxyItemize}
+\item Permite ver cada archivo fuente (por ejemplo {\ttfamily main.\+cpp}) con una lista de funciones y variables documentadas.
+\end{DoxyItemize}
+\item {\bfseries{Funciones}} y Variables\+:
+\begin{DoxyItemize}
+\item Cada función está documentada con su propósito, parámetros y comportamiento.
+\item Las variables globales más importantes se describen para entender su rol dentro del lazo de control o de las comunicaciones.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+En resumen, si el lector quiere\+:
+
+
+\begin{DoxyItemize}
+\item Entender el sistema a alto nivel → revisar esta página principal.
+\item Ver qué hace cada nodo → entrar a \doxylink{group___n_o_d_e___s_e_n_s_o_r}{Nodo de Sensado} y NODE\+\_\+\+ACTUATOR en la sección "{}\+Modules"{}.
+\item Ir a detalle de implementación → navegar a "{}\+Files"{} y abrir los fuentes. 
+\end{DoxyItemize}

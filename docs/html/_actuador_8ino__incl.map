@@ -1,13 +1,13 @@
-<map id="src/Actuador.ino" name="src/Actuador.ino">
-<area shape="rect" id="Node000001" title=" " alt="" coords="209,5,326,32"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,82,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,35,97,78,95,72,228,30"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="106,80,213,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,32,192,73,190,69,246,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="238,80,297,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="269,31,270,66,265,63,266,34"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="321,80,433,107"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="287,30,348,71,343,71,286,35"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="457,80,518,107"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="306,30,445,77,439,77,305,35"/>
+<map id="firmware/Actuador/src/Actuador.ino" name="firmware/Actuador/src/Actuador.ino">
+<area shape="rect" id="Node000001" title=" " alt="" coords="193,5,342,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,82,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,51,94,93,92,88,209,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="106,96,213,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,48,190,89,187,84,237,49"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="238,96,297,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="269,47,270,82,265,79,266,51"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="321,96,433,123"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="296,46,350,87,345,86,295,51"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="457,96,518,123"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="325,46,445,91,439,92,324,51"/>
 </map>

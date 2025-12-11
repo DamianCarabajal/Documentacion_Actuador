@@ -1,0 +1,140 @@
+/**
+ * @mainpage Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador
+ *
+ * @section intro_sec ¿Qué es este sistema?
+ *
+ * Este proyecto implementa un sistema IoT sencillo para el control de temperatura
+ * en una sala, utilizando dos nodos físicos y un broker MQTT:
+ *
+ * - Un **Nodo de Sensado** (ESP8266) que mide temperatura y humedad.
+ * - Un **Nodo Actuador** (ESP32-C6) que mueve un servomotor según una consigna.
+ * - Un **broker MQTT** (por ejemplo, una Raspberry Pi) que concentra toda
+ *   la información y permite la integración con herramientas como Node-RED.
+ *
+ * El objetivo es disponer de un ejemplo completo y didáctico que combine:
+ *
+ * - Adquisición de datos.
+ * - Control PI discreto.
+ * - Comunicación IoT (WiFi + MQTT).
+ * - Ejecución en tiempo real con FreeRTOS (en el nodo actuador).
+ *
+ * ---
+ *
+ * @section arch_sec Arquitectura general
+ *
+ * A alto nivel, la arquitectura puede describirse así:
+ *
+ * - @b Nodo_de_Sensado (ESP8266):
+ *   - Mide @b temperatura y @b humedad mediante un sensor DHT11.
+ *   - Se conecta a una red WiFi de laboratorio.
+ *   - Resuelve dinámicamente la IP del broker (por nombre de host).
+ *   - Publica periódicamente las mediciones vía MQTT.
+ *   - Utiliza LWT (Last Will and Testament) para informar si está @c Online
+ *     o @c Offline.
+ *
+ * - @b Nodo_Actuador (ESP32-C6):
+ *   - Implementa un controlador @b PI discreto diseñado en MATLAB
+ *     y discretizado por método de @b Tustin.
+ *   - Recibe por MQTT:
+ *       - La consigna de temperatura (SP).
+ *       - La temperatura medida (PV).
+ *       - Los parámetros de sintonía @c Kp y @c Ti.
+ *   - Calcula una salida lógica (0–100 %) y la convierte a una posición
+ *     en grados de un servomotor (0–180°).
+ *   - Publica su estado (posición del servo y mando lógico) a través de MQTT.
+ *   - Ejecuta el lazo de control y las comunicaciones en tareas separadas
+ *     de FreeRTOS.
+ *
+ * - @b Broker_MQTT:
+ *   - Centraliza todos los tópicos.
+ *   - Permite visualizar y manipular los datos desde Node-RED, dashboards,
+ *     u otras aplicaciones.
+ *
+ * ---
+ *
+ * @section topics_sec Tópicos MQTT utilizados
+ *
+ * @subsection sensor_topics Tópicos del Nodo de Sensado (@ref NODE_SENSOR)
+ *
+ * Tópico base:
+ * - @c universidad/piso3/sala_de_profes
+ *
+ * Tópicos derivados:
+ * - @c universidad/piso3/sala_de_profes/temperatura
+ *   - Publica la temperatura medida (en °C, con 1 decimal).
+ * - @c universidad/piso3/sala_de_profes/humedad
+ *   - Publica la humedad relativa (en %, sin decimales).
+ * - @c universidad/piso3/sala_de_profes/status
+ *   - Publica el estado del nodo: @c Online, @c Offline (LWT) o @c ErrorSensor.
+ *
+ * @subsection actuator_topics Tópicos del Nodo Actuador (@ref NODE_ACTUATOR)
+ *
+ * Tópicos de suscripción (entradas):
+ * - @c emu/t_sp
+ *   - Consigna de temperatura (SP).
+ * - @c emu/t_act
+ *   - Temperatura de proceso (PV).
+ * - @c emu/kp_set
+ *   - Valor de @c Kp para el controlador PI.
+ * - @c emu/ti_set
+ *   - Valor de @c Ti (tiempo integral) para el controlador PI.
+ *
+ * Tópicos de publicación (salidas):
+ * - @c emu/servo_pos
+ *   - Posición física del servomotor (grados).
+ * - @c emu/u_out
+ *   - Mando lógico del PI (0–100 %).
+ *
+ * Todos los mensajes se envían como texto ASCII, lo que facilita la depuración
+ * y el trazado de datos desde Node-RED u otras herramientas.
+ *
+ * ---
+ *
+ * @section flow_sec Flujo típico de funcionamiento
+ *
+ * 1. El @ref NODE_SENSOR se conecta a WiFi, resuelve la IP del broker MQTT
+ *    y comienza a publicar temperatura y humedad cada cierto intervalo.
+ * 2. El @ref NODE_ACTUATOR se conecta a WiFi y al mismo broker MQTT.
+ * 3. Desde un PC o una interfaz (por ejemplo Node-RED) se envía:
+ *    - La consigna de temperatura (SP).
+ *    - Opcionalmente, la sintonía del PI (@c Kp y @c Ti).
+ * 4. El @ref NODE_ACTUATOR:
+ *    - Recibe la SP y la PV.
+ *    - Ejecuta el controlador PI discreto.
+ *    - Ajusta la posición del servomotor en consecuencia.
+ *    - Va publicando su estado (posición y mando).
+ * 5. El sistema completo puede visualizarse y supervisarse desde:
+ *    - Dashboards.
+ *    - Gráficos de tendencia.
+ *    - Scripts de MATLAB analizando el log del actuador.
+ *
+ * ---
+ *
+ * @section nav_sec ¿Cómo leer esta documentación?
+ *
+ * Esta documentación está organizada en varios niveles:
+ *
+ * - @b Módulos (sección "Modules"):
+ *   - @ref NODE_SENSOR : descripción del nodo de sensado.
+ *   - @ref NODE_ACTUATOR : descripción del nodo actuador.
+ *   - Dentro de @ref NODE_ACTUATOR se encuentran, a su vez:
+ *     - El módulo de Control del Proceso y Actuador (PI + servo).
+ *     - El módulo de Comunicación WiFi/MQTT.
+ *     - El módulo de Manejo de Tareas FreeRTOS.
+ *
+ * - @b Archivos (sección "Files"):
+ *   - Permite ver cada archivo fuente (por ejemplo @c main.cpp) con
+ *     una lista de funciones y variables documentadas.
+ *
+ * - @b Funciones y Variables:
+ *   - Cada función está documentada con su propósito, parámetros y comportamiento.
+ *   - Las variables globales más importantes se describen para entender su rol
+ *     dentro del lazo de control o de las comunicaciones.
+ *
+ * En resumen, si el lector quiere:
+ *
+ * - Entender el sistema a alto nivel → revisar esta página principal.
+ * - Ver qué hace cada nodo → entrar a @ref NODE_SENSOR y @ref NODE_ACTUATOR
+ *   en la sección "Modules".
+ * - Ir a detalle de implementación → navegar a "Files" y abrir los fuentes.
+ */

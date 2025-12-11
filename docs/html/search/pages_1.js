@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['n_5factuador_0',['Documentaci-n_Actuador',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['control_20de_20temperatura_20–_20nodo_20sensor_20nodo_20actuador_0',['Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador',['../index.html',1,'']]]
 ];

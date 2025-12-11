@@ -1,0 +1,10 @@
+<map id="loop" name="loop">
+<area shape="rect" id="Node000001" title="Bucle principal del nodo de sensado." alt="" coords="5,24,51,50"/>
+<area shape="rect" id="Node000002" href="$group___n_o_d_e___s_e_n_s_o_r.html#gaee63e84c606cfaefce454689113c636c" title="Cliente MQTT basado en PubSubClient." alt="" coords="258,24,310,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="50,24,98,9,154,3,210,9,246,20,241,21,210,14,154,8,99,14,52,29"/>
+<area shape="rect" id="Node000003" href="$group___n_o_d_e___s_e_n_s_o_r.html#ga9c2de109d6cf7d0f1d29649bc9c6fe5d" title="Objeto de sensor DHT (temperatura y humedad)." alt="" coords="135,24,174,50"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="50,34,120,35,117,39,51,40"/>
+<area shape="rect" id="Node000004" href="$group___n_o_d_e___s_e_n_s_o_r.html#ga36c917f8a7a7142669385533300ada1a" title="Establece o restablece la conexión MQTT utilizando LWT." alt="" coords="99,74,210,101"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="51,43,107,67,103,70,50,48"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="190,71,241,53,246,52,192,76"/>
+</map>
