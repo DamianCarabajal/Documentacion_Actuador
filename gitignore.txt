@@ -1,0 +1,33 @@
+# ===================== Sistema operativo =====================
+.DS_Store
+Thumbs.db
+
+# ===================== IDEs / Editores =====================
+.vscode/
+.idea/
+*.code-workspace
+
+# ===================== Builds / Compilados (Arduino / PlatformIO) =====================
+.pio/
+.build/
+cmake-build-*/
+build/
+
+# ===================== Doxygen (dejamos la doc HTML, solo ignoramos basura) =====================
+# Si Doxygen genera archivos de checksum/mapa
+docs/html/*.map
+docs/html/*.md5
+
+# ===================== LaTeX (Doxygen) =====================
+docs/latex/*.aux
+docs/latex/*.log
+docs/latex/*.toc
+docs/latex/*.idx
+docs/latex/*.ind
+docs/latex/*.ilg
+docs/latex/*.out
+docs/latex/*.synctex.gz
+
+# Ignorar PDFs de LaTeX salvo el refman.pdf que queremos tener en el repo
+docs/latex/*.pdf
+!docs/latex/refman.pdf
