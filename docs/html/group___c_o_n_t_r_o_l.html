@@ -5,8 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Actuador - Proyecto Final Ingeniería Electrónica: Control del Proceso y Actuador</title>
+<title>Proyecto Final Ingeniería Electrónica: Control del Proceso y Actuador</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -17,19 +18,44 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js;TeX/AMSsymbols.js.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Actuador - Proyecto Final Ingeniería Electrónica
+   <div id="projectname">Proyecto Final Ingeniería Electrónica
    </div>
   </td>
  </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
  </tbody>
 </table>
 </div>
@@ -41,17 +67,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 <script type="text/javascript">
 $(function() { codefold.init(); });
 </script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-$(function() {
-  initMenu('',true,false,'search.php','Search',true);
-  $(function() { init_search(); });
-});
-</script>
-<div id="main-nav"></div>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -64,8 +80,15 @@ $(function() {
 <script type="text/javascript">
 $(function(){initNavTree('group___c_o_n_t_r_o_l.html','',''); });
 </script>
-<div id="container">
-<div id="doc-content">
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','Search',true);
+});
+</script>
+<div id="main-nav"></div>
+<div id="container"><div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -159,14 +182,14 @@ Variables</h2></td></tr>
 
 <p>Aplica un paso del controlador PI discreto y actualiza el servo. </p>
 <p>Implementa el algoritmo recursivo:   </p><p class="formulaDsp">
-<picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\&zwj;[  u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
-\&zwj;]" src="form_1.png"/></picture>
+\[  u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\]
 </p>
-<p> donde <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ e[k] = SP - PV $" src="form_2.png"/></picture>.</p>
+<p> donde \( e[k] = SP - PV \).</p>
 <p>Luego:</p><ul>
-<li>Se satura <picture><source srcset="form_3_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ u[k] $" src="form_3.png"/></picture> al rango 0..100 %.</li>
+<li>Se satura \( u[k] \) al rango 0..100 %.</li>
 <li>Se actualizan <a class="el" href="#ga8fa1c5428ed7af4a44b3945e878763dc">error_k_1</a> y <a class="el" href="#gaaa8cafedd34c2b7032c69588d9e8d3d3">u_logic</a>.</li>
-<li>Se convierte <picture><source srcset="form_3_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ u[k] $" src="form_3.png"/></picture> a grados de servo y se llama a <a class="el" href="#gacea260ba8426e8c1691a1c2e0a1061c7">setServoDegrees()</a>. </li>
+<li>Se convierte \( u[k] \) a grados de servo y se llama a <a class="el" href="#gacea260ba8426e8c1691a1c2e0a1061c7">setServoDegrees()</a>. </li>
 </ul>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -347,8 +370,8 @@ Here is the caller graph for this function:</div>
 
 <p>Error de control en el instante k-1 (e[k-1]). </p>
 <p>Se utiliza por el algoritmo recursivo del PI discreto:   </p><p class="formulaDsp">
-<picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\&zwj;[   u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
-\&zwj;]" src="form_0.png"/></picture>
+\[   u[k] = u[k-1] + Kpos \cdot e[k] + Kneg \cdot e[k-1]
+\]
 </p>
  
 </div>

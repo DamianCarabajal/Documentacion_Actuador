@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Actuador - Proyecto Final Ingeniería Electrónica", "index.html", [
+  [ "Proyecto Final Ingeniería Electrónica", "index.html", [
     [ "Sistema IoT de Control de Temperatura – Nodo Sensor + Nodo Actuador", "index.html", "index" ],
     [ "Topics", "topics.html", "topics" ],
     [ "Files", "files.html", [
