@@ -39,45 +39,148 @@ a:hover {
 #nav-tree .label, #nav-tree a {
     color: #ffffff !important;
 }
-/* ====== Colores de texto principales (zona de contenido) ====== */
+/* ================ Tema claro personalizado para Doxygen ================ */
 
-/* Texto general dentro del contenido central */
-body,
-div.contents,
-.textblock,
-.memdoc,
-.memitem p,
-.memitem li,
-p,
-li {
-    color: #111111 !important;   /* texto bien oscuro */
+/* Fondo general y tipografía */
+body {
+    background-color: #f3f4f6; /* gris muy claro */
+    color: #111827;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Títulos dentro del contenido (no toco el nav lateral) */
+/* Cabecera superior */
+#top {
+    background-color: #111827;           /* casi negro azulado */
+    border-bottom: 1px solid #0f172a;
+    color: #f9fafb;
+}
+
+#titlearea {
+    background: transparent;
+}
+
+#projectname {
+    color: #e5e7eb;
+    font-size: 1.4rem;
+}
+
+#projectbrief {
+    color: #9ca3af;
+}
+
+/* Navegación lateral */
+#side-nav,
+#nav-tree {
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+#nav-tree .label,
+#nav-tree a {
+    color: #e5e7eb !important;
+}
+
+#nav-tree .selected {
+    background-color: #1f2937;
+}
+
+/* Panel central de contenido */
+div.contents {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px rgba(15, 23, 42, 0.08);
+}
+
+/* Texto general dentro del contenido */
+div.contents p,
+div.contents li,
+div.contents td,
+div.contents th {
+    color: #111827 !important; /* gris muy oscuro */
+}
+
+/* Títulos dentro del contenido */
 div.contents h1,
 div.contents h2,
 div.contents h3,
-div.contents h4,
-div.contents h5 {
-    color: #0064de !important;   /* un azul/gris más fuerte para títulos */
+div.contents h4 {
+    color: #0f172a !important;
 }
 
-/* Etiquetas tipo "Parameters", "Returns" */
-dl.section dt {
-    color: #555555 !important;
+/* Enlaces */
+a,
+a.el {
+    color: #2563eb;
+}
+
+a:hover,
+a.el:hover {
+    color: #1d4ed8;
+}
+
+/* Bloques de código */
+div.fragment {
+    background-color: #0f172a; /* fondo oscuro */
+    color: #e5e7eb;            /* texto claro */
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+}
+
+/* Notas / advertencias tipo "Note" */
+div.note,
+dl.note,
+div.warning,
+dl.warning,
+div.attention,
+dl.attention,
+.admonition {
+    background-color: #fffbeb;           /* amarillo muy claro */
+    border-left: 4px solid #f59e0b;      /* naranja */
+    color: #111827 !important;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+}
+
+/* Título dentro de la nota ("Note") */
+div.note h3,
+dl.note dt,
+.admonition .admonition-title {
+    color: #92400e !important;           /* marrón/naranja oscuro */
     font-weight: 600;
 }
 
-/* Nombres de parámetros, variables en negrita */
+/* Títulos de secciones tipo "Parameters", etc. */
+dl.section dt {
+    color: #374151 !important;
+    font-weight: 600;
+}
+
+/* Nombres de parámetros / funciones */
 .paramname,
 .paramname em,
 .memname {
-    color: #6a0b8a !important;
+    color: #111827 !important;
     font-weight: 600;
 }
 
-/* Encabezado superior */
-#top {
-    background-color: #20232a;
-    color: #ffffff;
+/* Tamaño del logo */
+#projectlogo img {
+    max-height: 50px;
+    width: auto;
+    height: auto;
+}
+/* Prototipos de funciones (la línea gris "void foo(...)") */
+.memproto,
+.memproto *,
+.memproto code {
+    color: #111827 !important;   /* gris muy oscuro */
+}
+/* Encabezados tipo "Function Documentation", "Variable Documentation" */
+h1.groupheader,
+h2.groupheader,
+h3.groupheader,
+.memtitle {
+    color: #0f172a !important;
+    font-weight: 700;
 }
